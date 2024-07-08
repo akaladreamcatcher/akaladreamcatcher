@@ -1,0 +1,69 @@
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 500000; /* Ensure it's above everything else */
+    opacity: 1 !important;
+    transition: opacity 5s ease;
+    flex-direction: column;
+
+    .loading-screen.fade-out {
+        opacity: 0;
+    }
+
+}
+
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    position: fixed;
+    top: 55%;
+    left: 48%;
+    height: 10px;
+    width: 130px;
+    --c:no-repeat linear-gradient(#ffc400 0 0);
+    background: var(--c),var(--c), rgb(158, 219, 255);
+    background-size: 60% 100%;
+    animation: l16 25s infinite;
+    border-radius: 6px;
+  }
+  @keyframes l16 {
+    0%   {background-position:-150% 0,-150% 0}
+    66%  {background-position: 250% 0,-150% 0}
+    100% {background-position: 250% 0, 250% 0}
+  }
+
+.fade-in {
+    animation: fadeIn 7s ease;
+}
+
+.fade-out {
+    animation: fadeOut 4s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.loading-message {
+    color: rgb(158, 219, 255);
+    text-align: center;
+}
+
+.enter-fullscreen {
+    color: #ffc400;
+    cursor: pointer;
+    text-decoration:underline;
+}
