@@ -25,7 +25,7 @@ The Lifestyle Calculator is a React-based web application designed to educate ki
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/akaladreamcatcher/lifestyle-calculator.git
+   git clone https://github.com/akaladreamcatcher/akaladreamcatcher.git
    cd lifestyle-calculator
 
 2. **Install dependencies:**
