@@ -1,0 +1,53 @@
+.vehicle-selection {
+    text-align: center;
+    margin-top: 2vh;
+  }
+  
+  .search-bar {
+    margin-bottom: 2vh;
+    padding: 1vh 2vw;
+    width: 80vw;
+    max-width: 400px;
+    border: 0.1vh solid #ccc;
+    border-radius: 0.5vh;
+    font-size: 2vh;
+  }
+  
+  .carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20vh;
+  }
+  
+  .carousel-button {
+    background-color: transparent;
+    border: none;
+    font-size: 3vh;
+    cursor: pointer;
+  }
+  
+  .carousel-item {
+    margin: 0 2vw;
+  }
+  
+  .vehicle-button {
+    margin: 1vh;
+    padding: 1.5vh 3vw;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 1vh;
+    cursor: pointer;
+    font-size: 2vh;
+  }
+  
+  .vehicle-button.selected {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .vehicle-button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  

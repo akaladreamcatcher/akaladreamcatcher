@@ -1,0 +1,13 @@
+.custom-cursor {
+  position: fixed;
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  pointer-events: none;
+  background-size: cover;
+  z-index: 10000;
+  transition: transform 0.15s ease, background-image 0.15s ease;
+}
+
+.custom-cursor:hover {
+  transform: scale(1.2); /* Adjust scale for hover effect */
+}

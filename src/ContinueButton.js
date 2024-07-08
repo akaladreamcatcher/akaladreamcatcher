@@ -8,7 +8,7 @@ const ContinueButton = ({ onContinue, index }) => {
     transform: index === 0 ? 'translateX(-60%)' : 'translateX(-50%)', // Different position for the first button
     padding: '10px 20px',
     fontSize: '2rem',
-    cursor: 'pointer'
+    cursor: 'none'
   };
 
   return (

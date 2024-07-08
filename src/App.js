@@ -8,6 +8,14 @@ import LoadingScreen from './LoadingScreen.js';
 import InteractiveSVG from './InteractiveSVG'; // Adjust the path as needed
 import SpeechBubble from './SpeechBubble.js';
 import ContinueButton from './ContinueButton';  // Import the ContinueButton component
+import VehicleSelection from './VehicleSelection'; // Adjust the path as necessary
+
+import CustomCursor from './CustomCursor'; // Import the custom cursor component
+import defaultCursorSVG from './mouse.svg'; // Path to your default cursor SVG
+import hoverCursorSVG from './mouse_hover.svg'; // Path to your hover cursor SVG
+import clickCursorSVG from './mouse_click.svg'; // Path to your click cursor SVG
+
+
 
 import MapboxCitySelector from './MapboxCitySelector'; // Import the MapboxCitySelector component
 
@@ -90,6 +98,10 @@ function App() {
   return (
 
     <>
+      <CustomCursor defaultCursor={defaultCursorSVG}
+        hoverCursor={hoverCursorSVG}
+        clickCursor={clickCursorSVG} />
+
       <LoadingScreen />
       <SpeechBubble />
       <InteractiveSVG sectionIndex={currentSection} />
@@ -181,19 +193,19 @@ function App() {
                 <h2 className="header fade-in" >Rent or Purchase?</h2>
                 <div className='button-container fade-in'>
 
-                <button
-                  className={`button ${lifestyle.housingPreference === 'rent' ? 'selected' : 'unselected'}`}
-                  onClick={() => handleChange('housingPreference', 'rent')}
-                >
-                  Rent
-                </button>
-                <button
-                  className={`button ${lifestyle.housingPreference === 'purchase' ? 'selected' : 'unselected'}`}
-                  onClick={() => handleChange('housingPreference', 'purchase')}
-                >
-                  Purchase
-                </button>
-              </div>
+                  <button
+                    className={`button ${lifestyle.housingPreference === 'rent' ? 'selected' : 'unselected'}`}
+                    onClick={() => handleChange('housingPreference', 'rent')}
+                  >
+                    Rent
+                  </button>
+                  <button
+                    className={`button ${lifestyle.housingPreference === 'purchase' ? 'selected' : 'unselected'}`}
+                    onClick={() => handleChange('housingPreference', 'purchase')}
+                  >
+                    Purchase
+                  </button>
+                </div>
               </div>
 
             </div>
@@ -263,12 +275,8 @@ function App() {
 
           <div className="section">
             <div className="container">
-
-              <h2 className="header fade-in" >What make of vehicle?</h2>
-              <div className='input-container'>
-
-                <input type="text" value={lifestyle.vehicleMake} onChange={(e) => handleChange('vehicleMake', e.target.value)} />
-              </div>
+              <h2 className="header fade-in">What make of vehicle?</h2>
+              <VehicleSelection selectedMake={lifestyle.vehicleMake} onSelect={(make) => handleChange('vehicleMake', make)} />
             </div>
             <ContinueButton onContinue={moveNext} />
             <ScrollIndicator />
@@ -326,20 +334,20 @@ function App() {
 
               <h2 className=" header fade-in" >Do you want your kids in public or private school?</h2>
               <div className='input-container'>
-              <div className='button-container fade-in'>
+                <div className='button-container fade-in'>
 
-                <button
-                  className={`button ${lifestyle.schoolType === 'public' ? 'selected' : 'unselected'}`}
-                  onClick={() => handleChange('schoolType', 'public')}
-                >
-                  Public
-                </button>
-                <button
-                  className={`button ${lifestyle.schoolType === 'private' ? 'selected' : 'unselected'}`}
-                  onClick={() => handleChange('schoolType', 'private')}
-                >
-                  Private
-                </button>
+                  <button
+                    className={`button ${lifestyle.schoolType === 'public' ? 'selected' : 'unselected'}`}
+                    onClick={() => handleChange('schoolType', 'public')}
+                  >
+                    Public
+                  </button>
+                  <button
+                    className={`button ${lifestyle.schoolType === 'private' ? 'selected' : 'unselected'}`}
+                    onClick={() => handleChange('schoolType', 'private')}
+                  >
+                    Private
+                  </button>
                 </div>
 
               </div>
