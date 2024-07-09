@@ -109,7 +109,7 @@ function App() {
 
       <div className="body-gradient">
 
-        <ThreeScene currentSection={currentSection} numberOfKids={lifestyle.kids} numberOfCars={lifestyle.vehicles} />
+        <ThreeScene currentSection={currentSection} numberOfKids={lifestyle.kids} numberOfCars={lifestyle.vehicles} numberOfhouses={lifestyle.bedrooms} />
 
         <div ref={fullpageRef}>
 
@@ -170,7 +170,7 @@ function App() {
                   aria-label="Increase bedrooms count"
                 >+</button>
                   <button
-                    onClick={() => handleChange('bedrooms', Math.max(0, lifestyle.bedrooms - 1))}
+                    onClick={() => handleChange('bedrooms', Math.max(1, lifestyle.bedrooms - 1))}
                     aria-label="Decrease bedrooms count"
                   >-</button></div>
                 <input className="fade-in"

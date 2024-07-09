@@ -26,7 +26,7 @@ const cameraPositions = [
 ];
 
 
-const ThreeScene = ({ currentSection, numberOfKids, numberOfCars }) => {
+const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses }) => {
     const mountRef = useRef(null);
     const camera = useRef(new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000));
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -44,6 +44,7 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars }) => {
     const dummyLookAt = useRef(new THREE.Vector3());
     const kidMeshes = useRef([]); // Store references to kid meshes
     const carMeshes = useRef([]); // Store references to car meshes
+    const houseMeshes = useRef([]); // Store references to house meshes
 
 
     // Create a directional light - color, intensity
@@ -313,6 +314,103 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars }) => {
             }
         });
     }, [numberOfCars]);
+
+    
+
+
+
+    
+
+    const houseObjectProperties = [
+        { x: 10, y: -7.0, z: 102.5, scale: 0.16, rotation: { x: 0, y: Math.PI, z: 0 } },
+        { x: 10, y: -7.2, z: 102.5, scale: 0.16, rotation: { x: 0, y: Math.PI, z: 0 } },
+        { x: 7, y: -7.1, z: 102.5, scale: 0.16, rotation: { x: 0, y: Math.PI, z: 0 } },
+        { x: 4, y: -7.2, z: 102.5, scale: 0.18, rotation: { x: 0, y: Math.PI, z: 0 } },
+    ];
+
+    
+
+
+    useEffect(() => {
+        const loader = new GLTFLoader();
+        const houseUrls = ["1br.glb", "2br.glb", "3br.glb", "4br.glb"];
+
+
+        houseUrls.forEach((url, index) => {
+            loader.load(url, gltf => {
+
+                let meshIndex = 0;
+                gltf.scene.traverse(child => {
+                    if (child.isMesh && !child.userData.outline) {
+                        const colorIndex = (index * 16) % pastelColors.length;
+                        const materialColors = [];
+                        for (let i = 0; i < 16; i++) {
+                            materialColors.push(pastelColors[(colorIndex + i) % pastelColors.length]);
+                        }
+    
+                        const material = new THREE.ShaderMaterial({
+                            vertexShader: vertexShader,
+                            fragmentShader: fragmentShader,
+                            uniforms: {
+                                lightPosition: { value: lightPosition },
+                                colors: { value: materialColors },
+                            }
+                        });
+    
+                        child.material = material;
+    
+                        // Outline
+                        const outlineMaterial = new THREE.MeshBasicMaterial({
+                            color: 0xffffff, // Outline color
+                            side: THREE.BackSide
+                        });
+                        const outlineMesh = new THREE.Mesh(child.geometry, outlineMaterial);
+                        outlineMesh.scale.multiplyScalar(1);
+                        outlineMesh.userData.outline = true;
+                        child.add(outlineMesh);
+    
+                        meshIndex += 4;
+                        if (meshIndex >= pastelColors.length) meshIndex = 0;
+                    }
+                }
+
+            )
+                const sceneObject = gltf.scene;
+                sceneObject.position.set(houseObjectProperties[index].x, houseObjectProperties[index].y - 30, houseObjectProperties[index].z);
+                sceneObject.scale.set(houseObjectProperties[index].scale, houseObjectProperties[index].scale, houseObjectProperties[index].scale);
+                sceneObject.rotation.set(0, houseObjectProperties[index].rotation.y, 0);
+                scene.add(sceneObject);
+                houseMeshes.current[index] = sceneObject;  // Store the entire scene object
+            }, undefined, error => console.error('An error happened while loading model:', error));
+        });
+
+        return () => {
+            houseMeshes.current.forEach(sceneObject => {
+                scene.remove(sceneObject);
+            });
+        };
+    }, []);
+
+    // Animate y position based on numberOfhouses
+    useEffect(() => {
+        houseMeshes.current.forEach((sceneObject, index) => {
+            if (sceneObject) {
+                let targetY;
+                if (numberOfhouses > 4) {
+                    // If numberOfhouses is greater than 4, keep the last model in place
+                    targetY = index === 4 ? houseObjectProperties[index].y : houseObjectProperties[index].y + 10;
+                } else {
+                    // Move up the model that corresponds to numberOfhouses, reset others
+                    targetY = houseObjectProperties[index].y + (index === numberOfhouses - 1 ? 10 : -2);
+                }
+                gsap.to(sceneObject.position, {
+                    y: targetY,
+                    ease: "elastic.out(1, 0.2)",
+                    duration: 1.5
+                });
+            }
+        });
+    }, [numberOfhouses]);
 
     
 
