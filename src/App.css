@@ -7,7 +7,7 @@ body, input, button, h2 {
 
 /* App.css */
 #map {
-  width: 120%;
+  width: 300% !important;
   height: 90%; /* Ensure this is set */
   margin-top: 20px; /* Optional: Adjust as needed */
 }
