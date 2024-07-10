@@ -16,15 +16,18 @@ import hoverCursorSVG from './mouse_hover.svg'; // Path to your hover cursor SVG
 import clickCursorSVG from './mouse_click.svg'; // Path to your click cursor SVG
 
 
+import fullpage from 'fullpage.js';
+import 'fullpage.js/dist/fullpage.css';
+
 
 import MapboxCitySelector from './MapboxCitySelector'; // Import the MapboxCitySelector component
 
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 
-
-
-import fullpage from 'fullpage.js';
-import 'fullpage.js/dist/fullpage.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -92,6 +95,72 @@ function App() {
     '$': 'low',
     '$$': 'medium',
     '$$$': 'high'
+  };
+
+  // Ensure all values are defined and fallback to 0 if not
+  const {
+    baseLivingCost = "$0",
+    secondParentCost = "$0",
+    vehicleCost = "$0",
+    diningOutCost = "$0",
+    housingCost = "$0",
+    kidsCost = "$0",
+    vacationCost = "$0",
+    annualRetirementSavings = "$0"
+  } = lifestyle.costBreakdown;
+
+  const data = {
+    labels: [
+      'Base living cost for one adult',
+      'Additional cost for a second parent',
+      'Vehicle cost',
+      'Dining out costs per year',
+      'Housing cost',
+      'Cost for kids',
+      'Vacation costs per year',
+      'Annual retirement savings'
+    ],
+    datasets: [
+      {
+        data: [
+          parseFloat(baseLivingCost.replace(/\$|,/g, '')),
+          parseFloat(secondParentCost.replace(/\$|,/g, '')),
+          parseFloat(vehicleCost.replace(/\$|,/g, '')),
+          parseFloat(diningOutCost.replace(/\$|,/g, '')),
+          parseFloat(housingCost.replace(/\$|,/g, '')),
+          parseFloat(kidsCost.replace(/\$|,/g, '')),
+          parseFloat(vacationCost.replace(/\$|,/g, '')),
+          parseFloat(annualRetirementSavings.replace(/\$|,/g, ''))
+        ],
+        backgroundColor: [
+          '#ff9166', '#ffd24d', '#ffe199', '#fff0e6', '#ffcd85', '#ffdaaa', '#ffe8d0', '#fff5e6'
+        ],
+        hoverBackgroundColor: [
+          '#ff9166', '#ffd24d', '#ffe199', '#fff0e6', '#ffcd85', '#ffdaaa', '#ffe8d0', '#fff5e6'
+        ]
+      }
+    ]
+  };
+
+  const options = {
+    plugins: {
+      legend: {
+        labels: {
+          color: 'white' // Make legend labels white
+        }
+      },
+      tooltip: {
+        bodyColor: 'white' // Make tooltip labels white
+      }
+    },
+    layout: {
+      padding: {
+        top: 5,
+        bottom: 5,
+        left: 5,
+        right: 5
+      }
+    }
   };
 
 
@@ -383,7 +452,7 @@ function App() {
 
           </div>
           <div className="section">
-            <div className="container" style={{ left: '5%', height: '55vh', width: '90vh' }}>
+            <div className="container" style={{ left: '5%', height: '65vh', width: '100vh' }}>
               <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: '100%' }}>
                 {/* Left Column for Salary Calculation */}
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 2, marginRight: '20px' }}>
@@ -405,6 +474,8 @@ function App() {
                     paddingLeft: '20px' // Add some padding to separate text from the border
                   }}>
                     <h3>Cost Breakdown:</h3>
+                    <Pie data={data} options={options} />
+
                     <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 10px' }}> {/* Added borderSpacing for space between rows */}
                       <tbody>
                         <tr>

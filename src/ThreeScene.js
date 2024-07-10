@@ -159,55 +159,92 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
 
 
 
-
-
-
-
-
+    const kidUrls = ["kid5.glb", "kid5.glb", "kid5.glb", "kid5.glb"]; // URLs for kid models only
+    const objectProperties = [
+        { x: 26, y: -7.5, z: 105, scale: 1.2, rotation: { y: Math.PI / 2 } },
+        { x: 25.5, y: -7.5, z: 104, scale: 1.2, rotation: { y: 0 } },
+        { x: 25.5, y: -7.5, z: 103, scale: 1.2, rotation: { y: Math.PI / 4 } },
+        { x: 26, y: -7.5, z: 102, scale: 1.2, rotation: { y: Math.PI / 2 } }
+    ];
+    
     useEffect(() => {
         const loader = new GLTFLoader();
-        const kidUrls = ["kid5.glb", "kid5.glb", "kid5.glb", "kid5.glb"]; // URLs for kids models only
-        const objectProperties = [
-            { x: 26, y: 2.5, z: 105, scale: 1.2, rotation: { y: Math.PI / 2 } },
-            { x: 25.5, y: 2.5, z: 104, scale: 1.2, rotation: { y: 0 } },
-            { x: 25.5, y: 2.5, z: 103, scale: 1.2, rotation: { y: Math.PI / 4 } },
-            { x: 26, y: 2.5, z: 102, scale: 1.2, rotation: { y: Math.PI / 2 } }
-        ];
-
+    
         kidUrls.forEach((url, index) => {
             loader.load(url, gltf => {
-                const mesh = gltf.scene.children.find(child => child.isMesh);
-
-                
-                mesh.material.transparent = true;
-                mesh.material.opacity = 0.0;  // Start with models hidden
-                // Set position, scale, and rotation
-                mesh.position.set(objectProperties[index].x, objectProperties[index].y, objectProperties[index].z);
-                mesh.scale.set(objectProperties[index].scale, objectProperties[index].scale, objectProperties[index].scale);
-                mesh.rotation.set(0, objectProperties[index].rotation.y, 0);
-                scene.add(mesh);
-                kidMeshes.current[index] = mesh;
+                gltf.scene.traverse(child => {
+                    if (child.isMesh && !child.userData.outline) {
+                        const colorIndex = (index * 16) % pastelColors.length;
+                        const materialColors = [];
+                        for (let i = 0; i < 16; i++) {
+                            materialColors.push(pastelColors[(colorIndex + i) % pastelColors.length]);
+                        }
+    
+                        const material = new THREE.ShaderMaterial({
+                            vertexShader: vertexShader,
+                            fragmentShader: fragmentShader,
+                            uniforms: {
+                                lightPosition: { value: lightPosition },
+                                colors: { value: materialColors },
+                            }
+                        });
+    
+                        child.material = material;
+    
+                        // Outline
+                        const outlineMaterial = new THREE.MeshBasicMaterial({
+                            color: 0xffffff, // Outline color
+                            side: THREE.BackSide
+                        });
+                        const outlineMesh = new THREE.Mesh(child.geometry, outlineMaterial);
+                        outlineMesh.scale.multiplyScalar(1);
+                        outlineMesh.userData.outline = true;
+                        child.add(outlineMesh);
+                    }
+                });
+    
+                const sceneObject = gltf.scene;
+                sceneObject.position.set(objectProperties[index].x, objectProperties[index].y - 10, objectProperties[index].z); // Start from a lower y position
+                sceneObject.scale.set(objectProperties[index].scale, objectProperties[index].scale, objectProperties[index].scale);
+                sceneObject.rotation.set(0, objectProperties[index].rotation.y, 0);
+                scene.add(sceneObject);
+                kidMeshes.current[index] = sceneObject;
             }, undefined, error => console.error('An error happened while loading model:', error));
         });
-
+    
         return () => {
             kidMeshes.current.forEach(mesh => {
                 scene.remove(mesh);
             });
         };
     }, []);
-
-    // Animate opacity based on numberOfKids
+    
     useEffect(() => {
-        kidMeshes.current.forEach((mesh, index) => {
-            if (mesh) {
-                gsap.to(mesh.material, {
-                    opacity: index < numberOfKids ? 1 : 0, // Only make as many kids visible as the state specifies
-                    duration: 1
+        // Ensure initial state is accurate
+        kidMeshes.current.forEach((sceneObject, index) => {
+            if (sceneObject) {
+                const initialY = objectProperties[index].y - 10;
+                sceneObject.position.setY(initialY);
+            }
+        });
+    
+        // Animate based on numberOfKids
+        kidMeshes.current.forEach((sceneObject, index) => {
+            if (sceneObject) {
+                const targetY = objectProperties[index].y + (index < numberOfKids ? 10 : 0); // Move up if kid should be visible
+                gsap.to(sceneObject.position, {
+                    y: targetY,
+                    ease: "elastic.out(1, 0.3)",
+                    duration: 1.5
                 });
             }
         });
     }, [numberOfKids]);
+    
+
+    
+
+
 
      // Define the scene's fog
      const color = 0xffc400;  // White fog
@@ -322,10 +359,10 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
     
 
     const houseObjectProperties = [
-        { x: 10, y: -7.0, z: 102.5, scale: 0.16, rotation: { x: 0, y: Math.PI, z: 0 } },
-        { x: 10, y: -7.2, z: 102.5, scale: 0.16, rotation: { x: 0, y: Math.PI, z: 0 } },
-        { x: 7, y: -7.1, z: 102.5, scale: 0.16, rotation: { x: 0, y: Math.PI, z: 0 } },
-        { x: 4, y: -7.2, z: 102.5, scale: 0.18, rotation: { x: 0, y: Math.PI, z: 0 } },
+        { x: 10, y: -17.0, z: 102.5, scale: 0.18, rotation: { x: 0, y: Math.PI, z: 0 } },
+        { x: 10, y: -17.2, z: 102.5, scale: 0.14, rotation: { x: 0, y: Math.PI, z: 0 } },
+        { x: 7, y: -17.1, z: 102.5, scale: 0.16, rotation: { x: 0, y: Math.PI, z: 0 } },
+        { x: 4, y: -17.2, z: 102.5, scale: 0.20, rotation: { x: 0, y: Math.PI, z: 0 } },
     ];
 
     
@@ -401,7 +438,7 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
                     targetY = index === 4 ? houseObjectProperties[index].y : houseObjectProperties[index].y + 10;
                 } else {
                     // Move up the model that corresponds to numberOfhouses, reset others
-                    targetY = houseObjectProperties[index].y + (index === numberOfhouses - 1 ? 10 : -2);
+                    targetY = houseObjectProperties[index].y + (index === numberOfhouses - 1 ? 20 : -2);
                 }
                 gsap.to(sceneObject.position, {
                     y: targetY,
