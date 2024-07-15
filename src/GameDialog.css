@@ -1,0 +1,45 @@
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+    background-image: linear-gradient(180deg, #000000ab, #000000, #000000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10000000;
+}
+
+.dialog-box {
+  width: 600px;
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.character-svg img {
+    position: absolute;
+  height: 40vh;
+  float: left;
+  margin-right: 20px;
+  left: -15vh;
+  top: -20vh;
+  filter: drop-shadow(0px 0px 10px white); /* Adjust x, y offset and blur radius as needed */
+
+}
+
+.dialog-text {
+  color: black;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.continue-prompt {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: grey;
+}

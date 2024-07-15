@@ -11,7 +11,7 @@ const ScrollIndicator = () => {
                 height: '3vh',
                 border: 'none',
                 color: '#ffffff',
-                textShadow: '0px 0px 0px #ffffff'
+                textShadow: '0px 0px 0px #ababab'
             }} />
         </div>
     );

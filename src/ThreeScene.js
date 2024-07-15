@@ -97,7 +97,7 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
             y: position.y,
             z: position.z,
             ease: "power3.inOut",
-            duration: 4
+            duration: 1.2
         });
 
         // Animate lookAt position using GSAP
@@ -106,7 +106,7 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
             y: lookAt.y,
             z: lookAt.z,
             ease: "power3.inOut",
-            duration: 4,
+            duration: 1.2,
             onUpdate: () => {
                 camera.current.lookAt(dummyLookAt.current);
             },

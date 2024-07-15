@@ -29,7 +29,7 @@ const SpeechBubble = () => {
             }, 1000); // allow 1 second for fading out
         };
 
-        const intervalId = setInterval(cycleMessage, 9000); // change message every 9 seconds
+        const intervalId = setInterval(cycleMessage, 15000); // change message every 9 seconds
 
         // Initial fade-in when component mounts
         setOpacity(1);

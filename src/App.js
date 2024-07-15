@@ -14,6 +14,8 @@ import CustomCursor from './CustomCursor'; // Import the custom cursor component
 import defaultCursorSVG from './mouse.svg'; // Path to your default cursor SVG
 import hoverCursorSVG from './mouse_hover.svg'; // Path to your hover cursor SVG
 import clickCursorSVG from './mouse_click.svg'; // Path to your click cursor SVG
+import GameDialog from './GameDialog';  // Import the GameDialog component
+
 
 
 import fullpage from 'fullpage.js';
@@ -38,6 +40,13 @@ function App() {
   const fullpageInstanceRef = useRef(null);  // Store the instance in a ref
 
   const [currentSection, setCurrentSection] = useState(0); // Now useState is correctly imported
+
+  const [showDialog, setShowDialog] = useState(true);
+
+  const handleDialogComplete = () => {
+    setShowDialog(false);
+  };
+
 
 
 
@@ -167,6 +176,8 @@ function App() {
   return (
 
     <>
+          {showDialog && <GameDialog onComplete={handleDialogComplete} />}
+
       <CustomCursor defaultCursor={defaultCursorSVG}
         hoverCursor={hoverCursorSVG}
         clickCursor={clickCursorSVG} />
@@ -183,7 +194,7 @@ function App() {
         <div ref={fullpageRef}>
 
           <div className="section">
-            <div className="container" style={{ left: '5%', height: '65vh', width: '50vh' }}>
+            <div className="container" style={{ left: '5%', height: '70vh', width: '50vh' }}>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
                 <h2 className="header fade-in" style={{ textAlign: 'center' }}> AKALA Dream Lifestyle Calculator </h2>
                 <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff' }}>This lifestyle simulation is designed to help kids and young adults understand how much adulthood really costs. </p>
@@ -375,7 +386,7 @@ function App() {
           </div>
           <div className="section">
             <div className="container">
-              <h2 className=" header fade-in" >How often do you want to go on vacation?</h2>
+              <h2 className=" header fade-in" >How often do you want to go on vacation each year?</h2>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
                   onClick={() => handleChange('vacationsPerYear', lifestyle.vacationsPerYear + 1)}
