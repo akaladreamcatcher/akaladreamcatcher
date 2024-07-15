@@ -428,26 +428,30 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
         };
     }, []);
 
-    // Animate y position based on numberOfhouses
-    useEffect(() => {
-        houseMeshes.current.forEach((sceneObject, index) => {
-            if (sceneObject) {
-                let targetY;
-                if (numberOfhouses > 4) {
-                    // If numberOfhouses is greater than 4, keep the last model in place
-                    targetY = index === 4 ? houseObjectProperties[index].y : houseObjectProperties[index].y + 10;
-                } else {
-                    // Move up the model that corresponds to numberOfhouses, reset others
-                    targetY = houseObjectProperties[index].y + (index === numberOfhouses - 1 ? 20 : -2);
-                }
-                gsap.to(sceneObject.position, {
-                    y: targetY,
-                    ease: "elastic.out(1, 0.2)",
-                    duration: 1.5
-                });
+   // Animate y position based on numberOfhouses
+useEffect(() => {
+    // Cap the numberOfhouses at 4
+    const cappedNumberOfhouses = Math.min(numberOfhouses, 4);
+
+    houseMeshes.current.forEach((sceneObject, index) => {
+        if (sceneObject) {
+            let targetY;
+            if (cappedNumberOfhouses > 4) {
+                // If cappedNumberOfhouses is greater than 4, keep the last model in place
+                targetY = index === 4 ? houseObjectProperties[index].y : houseObjectProperties[index].y + 10;
+            } else {
+                // Move up the model that corresponds to cappedNumberOfhouses, reset others
+                targetY = houseObjectProperties[index].y + (index === cappedNumberOfhouses - 1 ? 20 : -2);
             }
-        });
-    }, [numberOfhouses]);
+            gsap.to(sceneObject.position, {
+                y: targetY,
+                ease: "elastic.out(1, 0.2)",
+                duration: 1.5
+            });
+        }
+    });
+}, [numberOfhouses]);
+
 
     
 
