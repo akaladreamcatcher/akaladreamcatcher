@@ -1,10 +1,10 @@
 .interactive-svg, .background-svg {
   position: fixed;
-  bottom: -12vh;
+  bottom: 0vh;
   left: 8%;
   transform: translateX(-50%);
-  width: 40vh;   /* Sets the width as 10% of the viewport height */
-  height: 40vh;  /* Sets the height as 10% of the viewport height */
+  width: 20vh;   /* Sets the width as 10% of the viewport height */
+  height: 20vh;  /* Sets the height as 10% of the viewport height */
   z-index: 1000; /* Ensures it stays above other content */
 }
 

@@ -183,7 +183,7 @@ const MapboxCitySelector = ({ onSelectCity }) => {
         <span>{formatCityName(activeCity)}</span>
       </div>
       )}
-      <button onClick={resetMap} style={{ marginTop: '10px', padding: '10px 20px', borderRadius: '5px', border: 'none', backgroundColor: '#ffc400', cursor: 'none' }}>
+      <button onClick={resetMap} style={{ marginTop: '10px', padding: '10px 20px', borderRadius: '24px',   border: '4px solid #ffc400', backgroundColor: '#ffc400', cursor: 'none' }}>
         Change City
       </button>
     </div>

@@ -152,6 +152,9 @@ function App() {
   };
 
   const options = {
+    maintainAspectRatio: true, // This should be true to maintain the aspect ratio defined
+    aspectRatio: 0.8,  // Lower this number to increase height relative to the width
+
     plugins: {
       legend: {
         labels: {
@@ -164,8 +167,8 @@ function App() {
     },
     layout: {
       padding: {
-        top: 5,
-        bottom: 5,
+        top: 2,
+        bottom: 2,
         left: 5,
         right: 5
       }
@@ -197,7 +200,7 @@ function App() {
             <div className="container" style={{ left: '5%', height: '70vh', width: '50vh' }}>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
                 <h2 className="header fade-in" style={{ textAlign: 'center' }}> AKALA Dream Lifestyle Calculator </h2>
-                <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff' }}>This lifestyle simulation is designed to help kids and young adults understand how much adulthood really costs. </p>
+                <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff' }}>This lifestyle simulation is designed to help young people understand how much adulthood really costs. </p>
                 <p className="paragraph fade-in" style={{ fontWeight: 'bold', textAlign: 'center', color: '#ffc400' }}> Scroll down to proceed through the experience.</p>
               </div>
               <ContinueButton onContinue={moveNext} />
@@ -270,7 +273,7 @@ function App() {
             <div className="container">
               <div className='input-container'>
 
-                <h2 className="header fade-in" >Rent or Purchase?</h2>
+                <h2 className="header fade-in" >Do you plan on renting or purchasing your home?</h2>
                 <div className='button-container fade-in'>
 
                   <button
@@ -297,7 +300,7 @@ function App() {
 
           <div className="section">
             <div className="container">
-              <h2 className="header fade-in">How often do you eat out per week?</h2>
+              <h2 className="header fade-in">How often do you plan on eating out per week?</h2>
               <div className='input-container'>
                 <div className='button-container fade-in'>
                   <button onClick={() => handleChange('diningOutFrequency', Math.max(0, lifestyle.diningOutFrequency + 1))}
@@ -355,7 +358,7 @@ function App() {
 
           <div className="section">
             <div className="container">
-              <h2 className="header fade-in">What make of vehicle?</h2>
+              <h2 className="header fade-in">What make of vehicle do you want to drive?</h2>
               <VehicleSelection selectedMake={lifestyle.vehicleMake} onSelect={(make) => handleChange('vehicleMake', make)} />
             </div>
             <ContinueButton onContinue={moveNext} />
@@ -364,7 +367,7 @@ function App() {
           </div>
           <div className="section">
             <div className="container">
-              <h2 className=" header fade-in" >New or Used Car?</h2>
+              <h2 className=" header fade-in" >Do you want to buy a New or Used Car?</h2>
               <div className='input-container'>
                 <button
                   className={`button ${lifestyle.vehicleCondition === 'new' ? 'selected' : 'unselected'}`}
@@ -412,7 +415,7 @@ function App() {
           <div className="section">
             <div className="container">
 
-              <h2 className=" header fade-in" >Do you want your kids in public or private school?</h2>
+              <h2 className=" header fade-in" >Do you want your kids to enroll in public or private school?</h2>
               <div className='input-container'>
                 <div className='button-container fade-in'>
 
@@ -463,7 +466,7 @@ function App() {
 
           </div>
           <div className="section">
-            <div className="container" style={{ left: '5%', height: '65vh', width: '100vh' }}>
+            <div className="container" style={{ left: '5%', height: '70vh', width: '100vh', padding: '4vh' }}>
               <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: '100%' }}>
                 {/* Left Column for Salary Calculation */}
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 2, marginRight: '20px' }}>
@@ -487,7 +490,7 @@ function App() {
                     <h3>Cost Breakdown:</h3>
                     <Pie data={data} options={options} />
 
-                    <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 10px' }}> {/* Added borderSpacing for space between rows */}
+                    <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 6px' }}> {/* Added borderSpacing for space between rows */}
                       <tbody>
                         <tr>
                           <td style={{ fontWeight: 'normal', verticalAlign: 'bottom' }}>Base living cost for one adult:</td>

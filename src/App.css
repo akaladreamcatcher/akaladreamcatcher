@@ -24,6 +24,10 @@ body, button, a, input, select, textarea {
   cursor: none;
 }
 
+td {
+  font-size: 12px;
+}
+
 
 
 
