@@ -4,7 +4,7 @@
   height: 40px; /* Adjust size as needed */
   pointer-events: none;
   background-size: cover;
-  z-index: 10000;
+  z-index: 9999999999;
   transition: transform 0.15s ease, background-image 0.15s ease;
 }
 

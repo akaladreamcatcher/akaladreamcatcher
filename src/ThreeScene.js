@@ -75,6 +75,16 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
         renderer.setSize(window.innerWidth, window.innerHeight);
         mountRef.current.appendChild(renderer.domElement);
 
+          // Resize listener
+          const handleResize = () => {
+            // Update camera aspect ratio and renderer size
+            camera.current.aspect = window.innerWidth / window.innerHeight;
+            camera.current.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        };
+
+        window.addEventListener('resize', handleResize);
+
 
 
         const animate = () => {
@@ -85,6 +95,8 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
 
         return () => {
             mountRef.current.removeChild(renderer.domElement);
+            window.removeEventListener('resize', handleResize);
+
         };
     }, []);
 
@@ -97,7 +109,7 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
             y: position.y,
             z: position.z,
             ease: "power3.inOut",
-            duration: 1.2
+            duration: 0.8
         });
 
         // Animate lookAt position using GSAP
@@ -106,7 +118,7 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
             y: lookAt.y,
             z: lookAt.z,
             ease: "power3.inOut",
-            duration: 1.2,
+            duration: 0.8,
             onUpdate: () => {
                 camera.current.lookAt(dummyLookAt.current);
             },
@@ -147,7 +159,7 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
                 y: newLookAt.y,
                 z: newLookAt.z,
                 ease: "power3.out",
-                duration: 3,
+                duration: 0.8,
                 onUpdate: () => camera.current.lookAt(dummyLookAt.current)
             });
         };
@@ -234,8 +246,8 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
                 const targetY = objectProperties[index].y + (index < numberOfKids ? 10 : 0); // Move up if kid should be visible
                 gsap.to(sceneObject.position, {
                     y: targetY,
-                    ease: "elastic.out(1, 0.3)",
-                    duration: 1.5
+                    ease: "elastic.out(1, 0.1)",
+                    duration: 0.8
                 });
             }
         });
@@ -345,8 +357,8 @@ const ThreeScene = ({ currentSection, numberOfKids, numberOfCars, numberOfhouses
                 const targetY = carObjectProperties[index].y + (index < numberOfCars ? 4 : 0); // Move up if car should be visible
                 gsap.to(sceneObject.position, {
                     y: targetY,
-                    ease: "elastic.out(1, 0.3)",
-                    duration: 1.5
+                    ease: "elastic.out(1, 0.1)",
+                    duration: 0.8
                 });
             }
         });

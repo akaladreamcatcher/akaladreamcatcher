@@ -4,35 +4,76 @@
   left: 0;
   width: 100%;
   height: 100%;
-    background-image: linear-gradient(180deg, #000000ab, #000000, #000000);
+    background-image: linear-gradient(180deg, #ffffffab, #ffffff, #ffffff);
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: none;
   z-index: 10000000;
 }
 
+
+
 .dialog-box {
   width: 600px;
-  background-color: white;
-  padding: 40px;
+  background-image: linear-gradient(70deg, #fbff00, #ffc400);
+   border: 4px solid #ffc400;
+ padding: 40px;
   border-radius: 10px;
+  filter: drop-shadow(0px 0px 15px #ffc400);
+
   position: relative;
+  transition: transform 0.25s ease-in-out;
+  transform: rotateX(var(--rotateX, 0)) rotateY(var(--rotateY, 0));
+  transform-style: preserve-3d;
+
 }
+
+
+@keyframes float {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-15px); /* Adjust this value to control the movement distance */
+  }
+}
+
+@keyframes bounceUp {
+  0%, 70% {
+      transform: translateY(100vh); /* Start below the screen */
+  }
+  75% {
+      transform: translateY(-20px) rotateZ(20deg); /* Bounce up and rotate forward */
+  }
+  85% {
+      transform: translateY(0) rotateZ(-10deg); /* Bounce back and rotate backward */
+  }
+  100% {
+      transform: translateY(0) rotateZ(0deg); /* Settle into the final position with no rotation */
+  }
+}
+
+
+
+
 
 .character-svg img {
-    position: absolute;
-  height: 40vh;
+  position: absolute;
+  height: 25vw;
   float: left;
   margin-right: 20px;
-  left: -15vh;
-  top: -20vh;
-  filter: drop-shadow(0px 0px 10px white); /* Adjust x, y offset and blur radius as needed */
-
+  left: 19vw;
+  top: 11vw;
+  filter: drop-shadow(0px 0px 20px #ffc400);
+  z-index: 10000000;
+  animation: bounceUp 3s ease forwards, float 4s ease-in-out infinite 3s; /* Notice the delay on the float animation */
+  
 }
 
+
 .dialog-text {
-  color: black;
+  color: #ff7b00;
   font-size: 20px;
   line-height: 1.4;
 }
@@ -41,5 +82,53 @@
   position: absolute;
   bottom: 20px;
   right: 20px;
-  color: grey;
+  color: white;
 }
+
+.continue-prompt {
+  visibility: hidden;
+}
+
+.continue-prompt.pulse {
+  visibility: visible;
+  animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0;
+  }
+  40%, 60% {
+    opacity: 1;
+  }
+}
+
+.dialog-box {
+  transition: opacity 0.1s ease-in-out;
+}
+
+.dialog-overlay {
+  position: relative;
+}
+
+.particle {
+  position: absolute;
+  background-color: #ffc400;
+  border-radius: 50%;
+  animation: fall 20s linear infinite;
+  z-index: -1;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  30% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-200px) translateX(50px); /* Adjust based on desired vertical and horizontal movement */
+    opacity: 0;
+  }
+}
+

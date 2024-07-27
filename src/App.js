@@ -9,17 +9,25 @@ import InteractiveSVG from './InteractiveSVG'; // Adjust the path as needed
 import SpeechBubble from './SpeechBubble.js';
 import ContinueButton from './ContinueButton';  // Import the ContinueButton component
 import VehicleSelection from './VehicleSelection'; // Adjust the path as necessary
+import { debounce } from 'lodash'; // If you prefer lodash, uncomment this and remove the above custom debounce function
+
 
 import CustomCursor from './CustomCursor'; // Import the custom cursor component
 import defaultCursorSVG from './mouse.svg'; // Path to your default cursor SVG
 import hoverCursorSVG from './mouse_hover.svg'; // Path to your hover cursor SVG
 import clickCursorSVG from './mouse_click.svg'; // Path to your click cursor SVG
 import GameDialog from './GameDialog';  // Import the GameDialog component
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobe, faHouse, faBaby, faBed, faFileContract, faUtensils, faCar, faSuitcase, faSchool, faWheelchair } from '@fortawesome/free-solid-svg-icons';
+
+
+
 
 
 
 import fullpage from 'fullpage.js';
 import 'fullpage.js/dist/fullpage.css';
+import CountUp from 'react-countup';
 
 
 import MapboxCitySelector from './MapboxCitySelector'; // Import the MapboxCitySelector component
@@ -35,6 +43,9 @@ function App() {
   const dispatch = useDispatch();
   const lifestyle = useSelector(state => state.lifestyle);
   const [isVisible, setIsVisible] = useState(false); // State to control the visibility of the cost breakdown
+  const [showButton, setShowButton] = useState(true); // Controls visibility of the 'Show Breakdown' button
+  const [prevSalary, setPrevSalary] = useState(0);
+  const [currentSalary, setCurrentSalary] = useState(lifestyle.costBreakdown.totalRequiredSalary || 0);
 
   const fullpageRef = useRef(null);
   const fullpageInstanceRef = useRef(null);  // Store the instance in a ref
@@ -98,7 +109,42 @@ function App() {
   const handleCalculateClick = () => {
     dispatch(calculateSalary());
     setIsVisible(true); // Set visibility to true when the button is clicked
+    setShowButton(false); // Hide the button after it is clicked
+
   };
+
+
+  const handleChangeDebounced = debounce((method, value) => {
+    handleChange(method, value);
+  }, 200); // Adjust the debounce time to your needs
+
+
+  useEffect(() => {
+    dispatch(calculateSalary());
+  }, [
+    dispatch, // Now included as per ESLint's exhaustive-deps rule
+
+    lifestyle.vehicles,
+    lifestyle.diningOutFrequency,
+    lifestyle.bedrooms,
+    lifestyle.kids,
+    lifestyle.vacationsPerYear,
+    lifestyle.retirementAge
+  ]);
+  useEffect(() => {
+    const salaryStr = lifestyle.costBreakdown.totalRequiredSalary;
+    if (salaryStr) {
+      // Remove non-numeric characters except for digits and decimal points
+      const cleanedSalaryStr = salaryStr.replace(/[^0-9.]+/g, '');
+      const salary = parseInt(cleanedSalaryStr, 10);
+      if (!isNaN(salary)) {
+        setPrevSalary(currentSalary); // Updates previous salary
+        setCurrentSalary(salary); // Updates current salary
+        console.log("Updated Salaries", { prevSalary: currentSalary, currentSalary: salary });
+      }
+    }
+  }, [lifestyle.costBreakdown.totalRequiredSalary]);
+
 
   const priceLevels = {
     '$': 'low',
@@ -153,10 +199,12 @@ function App() {
 
   const options = {
     maintainAspectRatio: true, // This should be true to maintain the aspect ratio defined
-    aspectRatio: 0.8,  // Lower this number to increase height relative to the width
+    aspectRatio: 2,  // Lower this number to increase height relative to the width
 
     plugins: {
       legend: {
+        position: 'right', // Place legend on the right side of the chart
+
         labels: {
           color: 'white' // Make legend labels white
         }
@@ -176,10 +224,49 @@ function App() {
   };
 
 
+
+
+  // AdjustmentButton component for increment and decrement actions
+  const AdjustmentButton = ({ onClick, label }) => (
+    <button
+      onClick={onClick}
+      style={{
+        backgroundColor: '#ffcd85', // Light orange background
+        color: '#333', // Dark text color for contrast
+        border: 'none',
+        borderRadius: '5px',
+        padding: '4px 8px',
+        cursor: 'none',
+        margin: '0 5px',
+        fontSize: '16px',
+        height: '3vh',
+        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)' // subtle shadow for depth
+      }}
+    >
+      {label}
+    </button>
+  );
+
+  const TableRowWithAdjustment = ({ itemLabel, itemValue, onIncrease, onDecrease }) => (
+    <tr>
+      <td style={{ textAlign: 'right', verticalAlign: 'middle' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+          <AdjustmentButton label="-" onClick={onDecrease} />
+          <span style={{ width: '10px', fontSize: '1.2rem', textAlign: 'center', margin: '0 10px' }}>{itemValue}</span>
+          <AdjustmentButton label="+" onClick={onIncrease} />
+        </div>
+      </td>
+      <td style={{ fontWeight: 'normal', verticalAlign: 'middle', width: '150px' }}>{itemLabel}</td>
+
+    </tr>
+  );
+
+
+
   return (
 
     <>
-          {showDialog && <GameDialog onComplete={handleDialogComplete} />}
+      {showDialog && <GameDialog onComplete={handleDialogComplete} />}
 
       <CustomCursor defaultCursor={defaultCursorSVG}
         hoverCursor={hoverCursorSVG}
@@ -190,35 +277,58 @@ function App() {
       <InteractiveSVG sectionIndex={currentSection} />
 
 
-      <div className="body-gradient">
-
-        <ThreeScene currentSection={currentSection} numberOfKids={lifestyle.kids} numberOfCars={lifestyle.vehicles} numberOfhouses={lifestyle.bedrooms} />
+      <div className="body-gradient"
+      >
+        <div><div className="body-gradient-2"
+        ></div><ThreeScene currentSection={currentSection} numberOfKids={lifestyle.kids} numberOfCars={lifestyle.vehicles} numberOfhouses={lifestyle.bedrooms} />
+        </div>
 
         <div ref={fullpageRef}>
 
           <div className="section">
-            <div className="container" style={{ left: '5%', height: '70vh', width: '50vh' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
-                <h2 className="header fade-in" style={{ textAlign: 'center' }}> AKALA Dream Lifestyle Calculator </h2>
-                <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff' }}>This lifestyle simulation is designed to help young people understand how much adulthood really costs. </p>
-                <p className="paragraph fade-in" style={{ fontWeight: 'bold', textAlign: 'center', color: '#ffc400' }}> Scroll down to proceed through the experience.</p>
+            <div className="container" style={{
+              left: '5%',
+              height: '70vh',
+              width: '50vh',
+            }}>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center', // This centers children horizontally in a flex column layout
+                height: '100%'
+              }}>
+                <h2 className="header fade-in" style={{ textAlign: 'center' }}>
+                  AKALA Dream Lifestyle Calculator
+                </h2>
+                <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff' }}>
+                  This lifestyle simulation is designed to help young people understand how much adulthood really costs.
+                </p>
+                <p className="paragraph fade-in" style={{ fontWeight: 'bold', textAlign: 'center', color: '#ffd000', filter: 'drop-shadow(0px 0px 15px #ffb400)' }}>
+                  Scroll down to proceed through the experience.
+                </p>
+                <ContinueButton onContinue={moveNext} />
               </div>
-              <ContinueButton onContinue={moveNext} />
             </div>
-
           </div>
 
+
           <div className="section">
-            <div className="container" style={{ height: '70vh', width: '90vh' }}>
-              <h2 className="header fade-in" style={{ width: '100vh', position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 1 }}>
+            <div className="container" style={{ left: '10vh', height: '70vh', width: '90vh', backgroundImage: 'none', backdropFilter: 'none', border: 'none' }}>
+
+              <h2 className="header fade-in" style={{ width: '100vh', position: 'absolute', top: 0, left: '60%', transform: 'translateX(-50%)', filter: 'drop-shadow(0px 0px 15px #000000)', zIndex: 1 }}>
                 What city do you want to live in?
-              </h2>    <MapboxCitySelector onSelectCity={(city) => handleChange('city', city)} />
+              </h2>    <div className='mapBorder'><MapboxCitySelector onSelectCity={(city) => handleChange('city', city)} />
+</div>
             </div>
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
           </div>
           <div className="section">
             <div className="container">
+              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faBaby} />
+
               <h2 className="header fade-in">How many kids do you want?</h2>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
@@ -239,13 +349,16 @@ function App() {
 
               </div>
             </div>
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
 
           </div>
 
           <div className="section">
             <div className="container">
+              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faBed} />
+
               <h2 className="header fade-in" >How many bedrooms will your house have?</h2>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
@@ -265,13 +378,15 @@ function App() {
                 />
 
               </div>     </div>
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
 
           </div>
           <div className="section">
             <div className="container">
               <div className='input-container'>
+                <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faHouse} />
 
                 <h2 className="header fade-in" >Do you plan on renting or purchasing your home?</h2>
                 <div className='button-container fade-in'>
@@ -292,7 +407,8 @@ function App() {
               </div>
 
             </div>
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
 
 
@@ -300,10 +416,12 @@ function App() {
 
           <div className="section">
             <div className="container">
+              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faUtensils} />
+
               <h2 className="header fade-in">How often do you plan on eating out per week?</h2>
               <div className='input-container'>
                 <div className='button-container fade-in'>
-                  <button onClick={() => handleChange('diningOutFrequency', Math.max(0, lifestyle.diningOutFrequency + 1))}
+                  <button onClick={() => handleChangeDebounced('diningOutFrequency', Math.max(0, lifestyle.diningOutFrequency + 1))}
                     aria-label="Increase dining out frequency">+</button>
                   <input className="fade-in"
                     type="number"
@@ -311,7 +429,7 @@ function App() {
                     onChange={() => { }} // Disable typing
                     style={{ textAlign: 'center', fontSize: '6rem' }}
                     readOnly />
-                  <button onClick={() => handleChange('diningOutFrequency', lifestyle.diningOutFrequency - 1)}
+                  <button onClick={() => handleChangeDebounced('diningOutFrequency', lifestyle.diningOutFrequency - 1)}
                     aria-label="Decrease dining out frequency">-</button>
                 </div>
               </div>
@@ -325,12 +443,15 @@ function App() {
                 ))}
               </div>
             </div>
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
           </div>
 
           <div className="section">
             <div className="container">
+              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faCar} />
+
               <h2 className="header fade-in" >How many vehicles do you want?</h2>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
@@ -351,22 +472,28 @@ function App() {
 
               </div>
             </div>
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
 
           </div>
 
           <div className="section">
             <div className="container">
+              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faCar} />
+
               <h2 className="header fade-in">What make of vehicle do you want to drive?</h2>
               <VehicleSelection selectedMake={lifestyle.vehicleMake} onSelect={(make) => handleChange('vehicleMake', make)} />
             </div>
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
 
           </div>
           <div className="section">
             <div className="container">
+              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faCar} />
+
               <h2 className=" header fade-in" >Do you want to buy a New or Used Car?</h2>
               <div className='input-container'>
                 <button
@@ -383,12 +510,15 @@ function App() {
                 </button>
               </div>
             </div>
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
 
           </div>
           <div className="section">
             <div className="container">
+              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faSuitcase} />
+
               <h2 className=" header fade-in" >How often do you want to go on vacation each year?</h2>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
@@ -408,12 +538,14 @@ function App() {
                 />
 
               </div>   </div>
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
 
           </div>
           <div className="section">
             <div className="container">
+              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faSchool} />
 
               <h2 className=" header fade-in" >Do you want your kids to enroll in public or private school?</h2>
               <div className='input-container'>
@@ -436,12 +568,15 @@ function App() {
               </div>
             </div>
 
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
 
           </div>
           <div className="section">
             <div className="container">
+              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faWheelchair} />
+
               <h2 className=" header fade-in" >What age do you want to retire?</h2>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
@@ -461,26 +596,41 @@ function App() {
                 />
 
               </div>      </div>
-            <ContinueButton onContinue={moveNext} />
+            <div className='continueDiv'>
+              <ContinueButton onContinue={moveNext} /></div>
             <ScrollIndicator />
 
           </div>
           <div className="section">
-            <div className="container" style={{ left: '5%', height: '70vh', width: '100vh', padding: '4vh' }}>
+            <div className="container" style={{ left: '5%', height: '80vh', width: '130vh', padding: '4vh' }}>
               <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: '100%' }}>
                 {/* Left Column for Salary Calculation */}
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 2, marginRight: '20px' }}>
-                  <button onClick={handleCalculateClick} style={{ whiteSpace: 'nowrap', padding: '10px 20px' }}>
-                    Calculate Required Salary
-                  </button>
-                  <p className="paragraph fade-in" style={{ textAlign: 'center' }}>Required Salary: </p>
-                  <h2 className="header fade-in" style={{ textAlign: 'center' }}> ${lifestyle.requiredSalary.toLocaleString()}</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 1, marginRight: '20px' }}>
+
+                  <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#60a9fc', filter: 'drop-shadow(0px 0px 10px #000000)'   }}>Required Salary: </p>
+                  <h2 className="header fade-in" style={{ textAlign: 'center' }}>
+                    <CountUp
+                      key={`${prevSalary}-${currentSalary}`} // Corrected the use of template string
+                      start={prevSalary}
+                      end={currentSalary}
+                      duration={1.5}
+                      separator=","
+                      decimals={0}
+                      decimal="."
+                      prefix="$"
+                    />
+                  </h2>
+                  {showButton && (
+                    <button onClick={handleCalculateClick} style={{ whiteSpace: 'nowrap', padding: '10px 20px' }}>
+                      Show Breakdown
+                    </button>
+                  )}
                 </div>
 
                 {/* Right Column for Cost Breakdown */}
                 {isVisible && (
                   <div className="cost-breakdown" style={{
-                    flex: 1,
+                    flex: 3,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
@@ -490,43 +640,86 @@ function App() {
                     <h3>Cost Breakdown:</h3>
                     <Pie data={data} options={options} />
 
-                    <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 6px' }}> {/* Added borderSpacing for space between rows */}
+                    <table style={{ width: '150%', borderCollapse: 'separate', borderSpacing: '0 0px' }}> {/* Added borderSpacing for space between rows */}
                       <tbody>
                         <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'bottom' }}>Base living cost for one adult:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}>{lifestyle.costBreakdown.baseLivingCost}</td>
+                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Base living cost for one adult:</td>
+                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.baseLivingCost}</td>
                         </tr>
                         <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'bottom' }}>Additional cost for a second parent:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}>{lifestyle.costBreakdown.secondParentCost}</td>
+                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Additional cost for a second parent:</td>
+                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.secondParentCost}</td>
                         </tr>
                         <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'bottom' }}>Vehicle cost:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}>{lifestyle.costBreakdown.vehicleCost}</td>
+                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Vehicle cost:</td>
+                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.vehicleCost}</td>
+                          <td>
+                            <TableRowWithAdjustment
+                              itemLabel="Number of vehicles"
+                              itemValue={lifestyle.vehicles}
+                              onIncrease={() => handleChange('vehicles', lifestyle.vehicles + 1)}
+                              onDecrease={() => handleChange('vehicles', Math.max(0, lifestyle.vehicles - 1))}
+                            />
+
+                          </td>
                         </tr>
                         <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'bottom' }}>Dining out costs per year:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}>{lifestyle.costBreakdown.diningOutCost}</td>
+                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Dining out costs per year:</td>
+                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.diningOutCost}</td>
+                          <td>
+                            <TableRowWithAdjustment
+                              itemLabel="Meals out per week"
+                              itemValue={lifestyle.diningOutFrequency}
+                              onIncrease={() => handleChange('diningOutFrequency', lifestyle.diningOutFrequency + 1)}
+                              onDecrease={() => handleChange('diningOutFrequency', Math.max(0, lifestyle.diningOutFrequency - 1))}
+                            />
+                          </td>
+
                         </tr>
                         <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'bottom' }}>Housing cost:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}>{lifestyle.costBreakdown.housingCost}</td>
+                          <td style={{ width: '200px', fontWeight: 'normal', verticalAlign: 'middle' }}>Housing cost:</td>
+                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.housingCost}</td>
+                          <td> <TableRowWithAdjustment
+                            itemLabel="Number of bedrooms"
+                            itemValue={lifestyle.bedrooms}
+                            onIncrease={() => handleChange('bedrooms', lifestyle.bedrooms + 1)}
+                            onDecrease={() => handleChange('bedrooms', Math.max(0, lifestyle.bedrooms - 1))}
+                          /></td>
                         </tr>
                         <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'bottom' }}>Cost for kids:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}>{lifestyle.costBreakdown.kidsCost}</td>
+                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Cost for kids:</td>
+                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.kidsCost}</td>
+                          <td> <TableRowWithAdjustment
+                            itemLabel="Number of kids"
+                            itemValue={lifestyle.kids}
+                            onIncrease={() => handleChange('kids', lifestyle.kids + 1)}
+                            onDecrease={() => handleChange('kids', Math.max(0, lifestyle.kids - 1))}
+                          /></td>
                         </tr>
                         <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'bottom' }}>Vacation costs per year:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}>{lifestyle.costBreakdown.vacationCost}</td>
+                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Vacation costs per year:</td>
+                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.vacationCost}</td>
+                          <td> <TableRowWithAdjustment
+                            itemLabel="Vacations per year"
+                            itemValue={lifestyle.vacationsPerYear}
+                            onIncrease={() => handleChange('vacationsPerYear', lifestyle.vacationsPerYear + 1)}
+                            onDecrease={() => handleChange('vacationsPerYear', Math.max(0, lifestyle.vacationsPerYear - 1))}
+                          /></td>
+
                         </tr>
                         <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'bottom' }}>Annual retirement savings:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}>{lifestyle.costBreakdown.annualRetirementSavings}</td>
+                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Annual retirement savings:</td>
+                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.annualRetirementSavings}</td>
+                          <td><TableRowWithAdjustment
+                            itemLabel="Retirement Age"
+                            itemValue={lifestyle.retirementAge}
+                            onIncrease={() => handleChangeDebounced('retirementAge', lifestyle.retirementAge + 1)}
+                            onDecrease={() => handleChangeDebounced('retirementAge', Math.max(0, lifestyle.retirementAge - 1))}
+                          /></td>
                         </tr>
                         <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'bottom' }}>Total required annual salary including retirement:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}>{lifestyle.costBreakdown.totalRequiredSalary}</td>
+                          <td style={{ fontWeight: 'bold', verticalAlign: 'middle', fontSize: '1rem' }}>Total required annual salary:</td>
+                          <td style={{ fontWeight: 'bold', textAlign: 'right', verticalAlign: 'middle', fontSize: '1.6rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.totalRequiredSalary}</td>
                         </tr>
                       </tbody>
                     </table>

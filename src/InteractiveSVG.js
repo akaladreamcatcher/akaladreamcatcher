@@ -22,12 +22,18 @@ const InteractiveSVG = ({ sectionIndex }) => {
   };
 
   useEffect(() => {
-    // Force reload of SVG on section change
     if (!svgRef.current) return;
     const currentSrc = svgRef.current.data;
-    svgRef.current.data = ''; // Reset the src to force reload
-    setTimeout(() => svgRef.current.data = currentSrc, 10); // Set it back to reload the SVG
-  }, [sectionIndex]);
+    svgRef.current.data = '';
+    const timeoutId = setTimeout(() => {
+        if (svgRef.current) {
+            svgRef.current.data = currentSrc; // Check if still mounted
+        }
+    }, 10);
+
+    // Cleanup function
+    return () => clearTimeout(timeoutId);
+}, [sectionIndex]);
 
   useEffect(() => {
     const svgDocument = svgRef.current?.contentDocument;

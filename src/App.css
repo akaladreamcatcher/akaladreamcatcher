@@ -5,20 +5,60 @@ body, input, button, h2 {
   font-family: 'DynaPuff', cursive;
 }
 
+.mapBorder {
+  position: relative; /* This allows absolute positioning inside it */
+  height: 80vh;
+  width: 95vh;
+  padding-bottom: 10vh;
+  margin-top: 10vh;
+  
+  background-image: url('parchment.svg');
+  background-size: contain; /* Adjust as needed */
+  background-repeat: no-repeat;
+  background-position: center; /* Centers the background */
+  z-index: 1;
+}
+
 /* App.css */
 #map {
-  width: 300% !important;
-  height: 90%; /* Ensure this is set */
-  margin-top: 20px; /* Optional: Adjust as needed */
+  position: relative;
+  width: 80% !important;
+  height: 55% !important; /* Ensure this is set */
+  margin: 20px; /* Optional: Adjust as needed */
+  margin-top: 15vh !important;
+  margin-bottom: 5vh;
+  cursor: none !important;
+  left: 0vh !important;
 }
 
 /* App.css */
 .mapboxgl-popup-content {
-  color: black;
-  font-size: 14px;
+  text-align: center; /* Centers text horizontally */
+  background-color: #fbff00; /* Set your desired background color */
+  color: #ff7b00; /* Set your desired text color */
+  padding: 40px; /* Optional: Adds padding inside the popup */
+  border-radius: 40px; /* Optional: Rounds the corners of the popup */
+  font-family: DynaPuff, sans-serif; /* Optional: Sets the font */
   font-weight: bold;
-  background-color: transparent;
+  font-size: 1.2rem;
+  box-shadow: none;
+  cursor: none;
+
 }
+
+.mapboxgl-popup {
+  background: transparent !important; /* Removes background */
+  border: none !important; /* Removes border */
+  box-shadow: none !important; /* Removes shadow */
+  cursor: none;
+
+}
+
+.mapboxgl-popup-tip {
+  display: none !important; /* Hides the popup tip if not needed */
+}
+
+
 
 body, button, a, input, select, textarea {
   cursor: none;
@@ -237,6 +277,23 @@ backdrop-filter: blur(20px);
   margin-top: 2vh;
 }
 
+.continueDiv {
+  position: absolute;
+  right: 5vh;
+  bottom: 0vh;
+}
+
+.continueDiv button:hover {
+  transform: scale(1.05);
+  box-shadow: inset 0px 0px 20px #ffd00022; /* Inner shadow */
+}
+
+.continueDiv button:active {
+  background-image: linear-gradient(70deg, #ffd000, #ffc400);
+  transform: scale(1.02); /* Slightly reduce the scale to give a pressed effect */
+  box-shadow: inset 0px 0px 20px #ffd00022); /* Inner shadow */
+}
+
 .input-container{
   display: flex;
   flex-direction: row;
@@ -250,18 +307,39 @@ backdrop-filter: blur(20px);
   color: white;
   z-index: 0; /* Set to 0 to be the base layer */
 }
+.body-gradient-2 {
+  position: fixed; /* Positioning context for the pseudo-element */
+  min-height: 100vh;
+  background-image: radial-gradient(circle at center, transparent, rgba(255, 255, 255, .8) 99%);
+  z-index: 50; /* Set to 0 to be the base layer */
+}
 
-.body-gradient::after {
+.body-gradient-2::after {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: radial-gradient(circle at center, transparent, rgba(255, 255, 255, 0.459) 92%);
+  background-image: radial-gradient(circle at center, transparent, rgba(255, 255, 255, .8) 30%);
+  background-size: 100% 100%; /* Start larger to mimic smaller inner radius */
+  background-position: center; /* Ensures the gradient stays centered */
   pointer-events: none;
-  z-index: 1; /* Immediately above the base layer */
+  z-index: 50;
+  animation: shrinkGradient 20s ease-out forwards;
+
 }
+
+
+@keyframes shrinkGradient {
+  from {
+    background-size: 100% 100%;
+  }
+  to {
+    background-size: 500% 500%;
+  }
+}
+
 
 /* Style for the input fields */
 input[type="number"] {
@@ -283,3 +361,4 @@ input[type="number"] {
 .InteractiveSVG {
   opacity: 0.5;
 }
+

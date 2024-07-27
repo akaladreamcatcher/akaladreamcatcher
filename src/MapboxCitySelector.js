@@ -20,6 +20,7 @@ const MapboxCitySelector = ({ onSelectCity }) => {
       zoom: 2,
       minZoom: 2,
       maxZoom: 10,
+      
       maxBounds: [
         [-130, 24], // Southwest coordinates
         [-65, 50] // Northeast coordinates
@@ -103,8 +104,6 @@ const MapboxCitySelector = ({ onSelectCity }) => {
       Baltimore: [-76.6122, 39.2904],
       Milwaukee: [-87.9065, 43.0389],
       Albuquerque: [-106.6504, 35.0844],
-      Tucson: [-110.9747, 32.2226],
-      Fresno: [-119.7871, 36.7378],
       KansasCity: [-94.5786, 39.0997],
       Omaha: [-95.9345, 41.2565],
       Raleigh: [-78.6382, 35.7796],
