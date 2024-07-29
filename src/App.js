@@ -491,7 +491,8 @@ function App() {
             <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
           </div>
           <div className="section">
-            <div className="container">              <div className="container-header">
+            <div className="container">              
+              <div className="container-header">
 
               <FontAwesomeIcon className="icon fade-in"  icon={faCar} />
 
@@ -724,7 +725,7 @@ function App() {
               </div>
             </div>
             {/*  <ContinueButton onContinue={moveNext} />
-              <ScrollIndicator /> */}
+              <ScrollIndicator// /> */}
           </div>
 
         </div>
