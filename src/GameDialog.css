@@ -13,12 +13,11 @@
 }
 
 
-
 .dialog-box {
-  width: 600px;
+  width: 60%;
   background-image: linear-gradient(70deg, #fbff00, #ffc400);
    border: 4px solid #ffc400;
- padding: 40px;
+ padding: 4vw;
   border-radius: 10px;
   filter: drop-shadow(0px 0px 15px #ffc400);
 
@@ -26,8 +25,65 @@
   transition: transform 0.25s ease-in-out;
   transform: rotateX(var(--rotateX, 0)) rotateY(var(--rotateY, 0));
   transform-style: preserve-3d;
+  transition: opacity 0.1s ease-in-out;
+
+
 
 }
+
+
+.dialog-text {
+  color: #ff7b00;
+  font-size: 2.4vw;
+  line-height: 1.4;
+}
+
+.character-svg img {
+  position: absolute;
+  height: 25vw;
+  float: left;
+  margin-right: 20px;
+  left: 19vw;
+  top: 11vw;
+  filter: drop-shadow(0px 0px 20px #ffc400);
+  z-index: 10000000;
+  animation: bounceUp 3s ease forwards, float 4s ease-in-out infinite 3s; /* Notice the delay on the float animation */
+  
+}
+
+
+/* Styles that apply to viewports less than or equal to 600px wide */
+@media (max-width: 1024px) {
+
+  .dialog-box {
+    width: 80%;
+     border: 4px solid #ffc400;
+   padding: 6vw;
+    border-radius: 10px;
+  
+    position: relative;
+
+  
+  }
+
+  .dialog-text {
+    font-size: 1.2rem;
+  }
+
+  .character-svg img {
+    position: absolute;
+    height: 50vw;
+    float: left;
+    margin-right: 20px;
+    left: 5vw;
+    top: 50vw;
+   
+  }
+
+}
+
+
+
 
 
 @keyframes float {
@@ -58,25 +114,8 @@
 
 
 
-.character-svg img {
-  position: absolute;
-  height: 25vw;
-  float: left;
-  margin-right: 20px;
-  left: 19vw;
-  top: 11vw;
-  filter: drop-shadow(0px 0px 20px #ffc400);
-  z-index: 10000000;
-  animation: bounceUp 3s ease forwards, float 4s ease-in-out infinite 3s; /* Notice the delay on the float animation */
-  
-}
 
 
-.dialog-text {
-  color: #ff7b00;
-  font-size: 20px;
-  line-height: 1.4;
-}
 
 .continue-prompt {
   position: absolute;
@@ -103,9 +142,6 @@
   }
 }
 
-.dialog-box {
-  transition: opacity 0.1s ease-in-out;
-}
 
 .dialog-overlay {
   position: relative;

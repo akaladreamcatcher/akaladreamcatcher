@@ -5,58 +5,7 @@ body, input, button, h2 {
   font-family: 'DynaPuff', cursive;
 }
 
-.mapBorder {
-  position: relative; /* This allows absolute positioning inside it */
-  height: 80vh;
-  width: 95vh;
-  padding-bottom: 10vh;
-  margin-top: 10vh;
-  
-  background-image: url('parchment.svg');
-  background-size: contain; /* Adjust as needed */
-  background-repeat: no-repeat;
-  background-position: center; /* Centers the background */
-  z-index: 1;
-}
 
-/* App.css */
-#map {
-  position: relative;
-  width: 80% !important;
-  height: 55% !important; /* Ensure this is set */
-  margin: 20px; /* Optional: Adjust as needed */
-  margin-top: 15vh !important;
-  margin-bottom: 5vh;
-  cursor: none !important;
-  left: 0vh !important;
-}
-
-/* App.css */
-.mapboxgl-popup-content {
-  text-align: center; /* Centers text horizontally */
-  background-color: #fbff00; /* Set your desired background color */
-  color: #ff7b00; /* Set your desired text color */
-  padding: 40px; /* Optional: Adds padding inside the popup */
-  border-radius: 40px; /* Optional: Rounds the corners of the popup */
-  font-family: DynaPuff, sans-serif; /* Optional: Sets the font */
-  font-weight: bold;
-  font-size: 1.2rem;
-  box-shadow: none;
-  cursor: none;
-
-}
-
-.mapboxgl-popup {
-  background: transparent !important; /* Removes background */
-  border: none !important; /* Removes border */
-  box-shadow: none !important; /* Removes shadow */
-  cursor: none;
-
-}
-
-.mapboxgl-popup-tip {
-  display: none !important; /* Hides the popup tip if not needed */
-}
 
 
 
@@ -72,17 +21,7 @@ td {
 
 
 
-h2 {
-  color: #FFF;
-  font-size: 3rem;
-  justify-content: center;
-  align-content: center;
-  padding: 1vh;
-  
 
-  
-
-}
 
   /* Animation Styles */
   .fade-in {
@@ -107,30 +46,7 @@ h2 {
     transform: translateX(0);
 }
 
-input, select {
-  font-family: 'DynaPuff', cursive;
 
-  height: 10vh;
-  padding: 1.5vh;
-  margin-top: 5vh;
-  margin-bottom: 5vh;
-
-  width: 30vh;
-  font-size: 3rem;
-  background-color: #ffffff4f;
-  border-radius: 24px;
-  border: 2px solid #ffffff75;
-  color: #616161;
-  -webkit-appearance: none; /* for Chrome, Safari, and Opera */
-  -moz-appearance: none;    /* for Firefox */
-  appearance: none;         /* Standard syntax */
- 
-}
-
-p {
-  color: #616161;
-  font-size: 2rem;
-}
 
 
 /* Ensures it targets the first section managed by fullpage.js */
@@ -147,7 +63,6 @@ p {
 #fullpage > .section:first-of-type .container {
   width: 80%; /* or any width according to your design */
   max-width: 600px; /* maximum width can be set to maintain readability */
-  margin: 0 auto; /* centers the container horizontally */
 }
 
 
@@ -155,20 +70,7 @@ p {
 
 
 
-button {
-  font-family: 'DynaPuff', cursive;
-  height: 8vh;
-  margin: 2vh;
-  padding: 2vh 3vh;
-  font-size: 2rem;
-  font-weight: bold;
-  cursor: none;
-  background-image: linear-gradient(70deg, #fbff00, #ffc400);
-  color: #ff7b00;
-  border: 4px solid #ffc400;
-  border-radius: 24px;
-  transition: background-image 0.3s, box-shadow 0.1s, transform 0.3s, border 0.3s; /* Smooth transitions for multiple properties */
-}
+
 
 button:hover {
   background-image: linear-gradient(70deg, #fbff00, #ffc400);
@@ -222,15 +124,185 @@ button:active {
 
 
 
+@media (min-width: 1025px) {
+
+  .mapBorder {
+    position: relative; /* This allows absolute positioning inside it */
+    height: 80vh;
+    width: 95vh;
+    padding-bottom: 10vh;
+    margin-top: 10vh;
+    
+    background-image: url('parchment.svg');
+    background-size: contain; /* Adjust as needed */
+    background-repeat: no-repeat;
+    background-position: center; /* Centers the background */
+    z-index: 1;
+  }
+  
+  /* App.css */
+  #map {
+    position: relative;
+    width: 80% !important;
+    height: 55% !important; /* Ensure this is set */
+    margin: 20px; /* Optional: Adjust as needed */
+    margin-top: 15vh !important;
+    margin-bottom: 5vh;
+    cursor: none !important;
+    left: 0vh !important;
+  }
+  
+  /* App.css */
+  .mapboxgl-popup-content {
+    text-align: center; /* Centers text horizontally */
+    background-color: #fbff00; /* Set your desired background color */
+    color: #ff7b00; /* Set your desired text color */
+    padding: 40px; /* Optional: Adds padding inside the popup */
+    border-radius: 40px; /* Optional: Rounds the corners of the popup */
+    font-family: DynaPuff, sans-serif; /* Optional: Sets the font */
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: none;
+    cursor: none;
+  
+  }
+  
+  .mapboxgl-popup {
+    background: transparent !important; /* Removes background */
+    border: none !important; /* Removes border */
+    box-shadow: none !important; /* Removes shadow */
+    cursor: none;
+  
+  }
+  
+  .mapboxgl-popup-tip {
+    display: none !important; /* Hides the popup tip if not needed */
+  }
+
+  .continueDiv {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+
+  }
+
+  .section{
+    display: flex;
+    justify-content: flex-end !important;
+    
+  }
+
+
+
+  .icon.fade-in {
+    height: 5vh;
+    width: 5vh;
+    position: absolute;
+    top: 10vh;
+    left: 11vh;
+    color: #7eb9fc;
+}
+
+
+  input, select {
+    font-family: 'DynaPuff', cursive;
+  
+    height: 10vh;
+    padding: 1.5vh;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+  
+    width: 30vh;
+    font-size: 6rem !important;
+    background-color: #ffffff4f;
+    border-radius: 24px;
+    border: 2px solid #ffffff75;
+    color: #616161;
+    -webkit-appearance: none; /* for Chrome, Safari, and Opera */
+    -moz-appearance: none;    /* for Firefox */
+    appearance: none;         /* Standard syntax */
+   
+  }
+  
+  p {
+    color: #616161;
+    font-size: 2rem;
+  }
+
+  /* Style for the input fields */
+input[type="number"] {
+  font-family: 'DynaPuff', cursive;
+
+
+  width: 10rem; /* Less width than before */
+  padding: 5vh;
+  text-align: center;
+  border: 2px solid #cccccc65;
+  border-radius: 24px; /* Rounded corners for better aesthetics */
+  background-color: #f8f8f810; /* Light grey background */
+}
+
+h1 {
+  color: #FFF;
+  font-size: 3rem;
+  justify-content: center;
+  align-content: center;
+  padding: 1vh;
+
+}
+
+  h2 {
+    color: #FFF;
+    font-size: 3rem;
+    justify-content: center;
+    align-content: center;
+    padding: 1vh;
+  
+  }
+
+  h3 {
+    color: #FFF;
+    font-size: 2rem;
+    justify-content: center;
+    align-content: center;
+    padding: 1vh;
+  
+  }
+
+  button {
+    font-family: 'DynaPuff', cursive;
+    height: 8vh;
+    margin: 2vh;
+    padding: 2vh 3vh;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: none;
+    background-image: linear-gradient(70deg, #fbff00, #ffc400);
+    color: #ff7b00;
+    border: 4px solid #ffc400;
+    border-radius: 24px;
+    transition: background-image 0.3s, box-shadow 0.1s, transform 0.3s, border 0.3s; /* Smooth transitions for multiple properties */
+  }
+
+  .button-container{
+    display: flex;
+    flex-direction: column;
+    padding: 1vh;
+    margin-top: 2vh;
+  }
+
+  .input-container{
+    display: flex;
+    flex-direction: row;
+    padding: 2vh;
+  }
 
 
 .container {
   display: flex;
-  position: absolute;
+  position: relative;
   width: 100vh;
   margin: 0 auto;   
-  right: 5vh; 
-  bottom: 10vh;       
   background-image: url('tex.png'), ;
   justify-content: center;
   align-items: center;
@@ -249,6 +321,234 @@ button:active {
 backdrop-filter: blur(20px);
 -webkit-backdrop-filter: blur(20px); /* For Safari */
 
+}
+}
+
+@media (max-width: 1024px) {
+
+  .mapBorder {
+    position: relative; /* This allows absolute positioning inside it */
+    height: 40vh;
+    margin-bottom: 20vh;
+    width: 100vw;
+    
+    background-image: url('parchment.svg');
+    background-size: contain; /* Adjust as needed */
+    background-repeat: no-repeat;
+    background-position: center; /* Centers the background */
+    z-index: 1;
+  }
+  
+  /* App.css */
+  #map {
+    position: relative;
+    width: 80vw !important;
+    height: 25vh !important; /* Ensure this is set */
+    margin-top: 5vh; /* Optional: Adjust as needed */
+
+    cursor: none !important;
+    left: 0vh !important;
+  }
+  
+  /* App.css */
+  .mapboxgl-popup-content {
+    text-align: center; /* Centers text horizontally */
+    background-color: #fbff00; /* Set your desired background color */
+    color: #ff7b00; /* Set your desired text color */
+    padding: 40px; /* Optional: Adds padding inside the popup */
+    border-radius: 40px; /* Optional: Rounds the corners of the popup */
+    font-family: DynaPuff, sans-serif; /* Optional: Sets the font */
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: none;
+    cursor: none;
+  
+  }
+  
+  .mapboxgl-popup {
+    background: transparent !important; /* Removes background */
+    border: none !important; /* Removes border */
+    box-shadow: none !important; /* Removes shadow */
+    cursor: none;
+  
+  }
+  
+  .mapboxgl-popup-tip {
+    display: none !important; /* Hides the popup tip if not needed */
+  }
+
+  .continueDiv {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: flex-end !important;
+
+  }
+
+  .section{
+    display: flex;
+    justify-content: flex-end !important;
+    
+  }
+
+  .container-header {
+    width: 80% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  .icon.fade-in {
+    padding: 1vh;
+    padding-top: 4vh;
+    height: 5vh;
+    width: 5vh;
+ 
+    color: #7eb9fc;
+}
+
+
+  input, select {
+    font-family: 'DynaPuff', cursive;
+  
+    height: 5vh;
+    padding: 1.5vh;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  
+    width: 5vh;
+    font-size: 1.5rem !important;
+    background-color: #ffffff4f;
+    border-radius: 12px;
+    border: 2px solid #ffffff75;
+    color: #616161;
+    -webkit-appearance: none; /* for Chrome, Safari, and Opera */
+    -moz-appearance: none;    /* for Firefox */
+    appearance: none;         /* Standard syntax */
+   
+  }
+  
+  p {
+    color: #616161;
+    font-size: 1rem;
+  }
+
+  /* Style for the input fields */
+input[type="number"] {
+  font-family: 'DynaPuff', cursive;
+
+
+  width: 4rem; /* Less width than before */
+  padding: 1vh;
+  text-align: center;
+  border: 2px solid #cccccc65;
+  border-radius: 12px; /* Rounded corners for better aesthetics */
+  background-color: #f8f8f810; /* Light grey background */
+}
+
+h1 {
+  color: #FFF;
+  font-size: 3rem;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  padding: 0.5vh;
+  
+  
+
+}
+
+  h2 {
+    color: #FFF;
+    font-size: 1rem;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    padding: 0.5vh;
+    
+    
+  
+  }
+
+
+  h3 {
+    color: #FFF;
+    font-size: 0.8rem;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    padding: 0.5vh;
+    
+    
+  
+  }
+
+
+
+  button {
+    font-family: 'DynaPuff', cursive;
+    height: 4vh;
+    margin: 1vh;
+    padding: 3vh;
+    font-size: 2rem;
+    line-height: 0;
+    font-weight: bold;
+    cursor: none;
+    background-image: linear-gradient(70deg, #fbff00, #ffc400);
+    color: #ff7b00;
+    border: 2px solid #ffc400;
+    border-radius: 12px;
+    transition: background-image 0.3s, box-shadow 0.1s, transform 0.3s, border 0.3s; /* Smooth transitions for multiple properties */
+  }
+
+  .button-container{
+    display: flex;
+    flex-direction: column;
+    padding: 1vh;
+    margin-top: 1vh;
+  }
+
+  .input-container{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 1vh;
+  }
+
+  .container {
+    display: flex;
+    position: relative;
+    width: 90vw !important;
+    height: auto !important;
+    margin: 2vh ; 
+    flex-direction: column !important;      
+    background-image: url('tex.png'), ;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* box-shadow: -30px -30px 1000px 0px #d6d6d6d5 ; */
+    border-radius: 20px;
+     padding: 0vh;
+     z-index: 100;
+   
+  
+      background-image: linear-gradient(45deg, #dadada65, #9494949a, #6161614d, #979797c4);
+    border: 3px solid #ffffff54;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px); /* For Safari */
+  
+  
+  }
+
+  .container-dining {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 /* This targets all sections inside the fullpageRef container */
@@ -270,18 +570,9 @@ backdrop-filter: blur(20px);
 
 }
 
-.button-container{
-  display: flex;
-  flex-direction: column;
-  padding: 1vh;
-  margin-top: 2vh;
-}
 
-.continueDiv {
-  position: absolute;
-  right: 5vh;
-  bottom: 0vh;
-}
+
+
 
 .continueDiv button:hover {
   transform: scale(1.05);
@@ -294,11 +585,7 @@ backdrop-filter: blur(20px);
   box-shadow: inset 0px 0px 20px #ffd00022); /* Inner shadow */
 }
 
-.input-container{
-  display: flex;
-  flex-direction: row;
-  padding: 2vh;
-}
+
 
 .body-gradient {
   position: relative; /* Positioning context for the pseudo-element */
@@ -341,18 +628,7 @@ backdrop-filter: blur(20px);
 }
 
 
-/* Style for the input fields */
-input[type="number"] {
-  font-family: 'DynaPuff', cursive;
 
-
-  width: 10rem; /* Less width than before */
-  padding: 5vh;
-  text-align: center;
-  border: 2px solid #cccccc65;
-  border-radius: 24px; /* Rounded corners for better aesthetics */
-  background-color: #f8f8f810; /* Light grey background */
-}
 
 .fp-watermark {
   display: none !important;

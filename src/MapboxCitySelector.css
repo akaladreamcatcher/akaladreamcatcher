@@ -1,0 +1,26 @@
+@media (max-width: 1200px) {
+
+    .reset-button {
+        margin-top: 0px;
+        padding: 20px;
+        line-height: 0;
+        border-radius: 12px;
+        border: 4px solid #ffc400;
+        background-color: #ffc400;
+        cursor: none;
+        font-size: 1rem;
+      }
+    }
+
+ @media (min-width: 1200px) {
+
+        .reset-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border-radius: 24px;
+            border: 4px solid #ffc400;
+            background-color: #ffc400;
+            cursor: none;
+          }
+        }
+

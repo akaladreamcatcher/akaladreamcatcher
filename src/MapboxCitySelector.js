@@ -5,6 +5,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { medianRentPrices } from './data'; // Adjust the path to your data.js
 import './App.css'; // Import the CSS file
+import './MapboxCitySelector.css'; // Import the CSS file
+
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZGpndXRicm9kIiwiYSI6ImNseG05dXN0OTA1OXMyam9taGF3bmY5OXYifQ.A7e4R-tTlvLZPTqN7_H9ig';
 
@@ -182,9 +184,8 @@ const MapboxCitySelector = ({ onSelectCity }) => {
         <span>{formatCityName(activeCity)}</span>
       </div>
       )}
-      <button onClick={resetMap} style={{ marginTop: '10px', padding: '10px 20px', borderRadius: '24px',   border: '4px solid #ffc400', backgroundColor: '#ffc400', cursor: 'none' }}>
-        Change City
-      </button>
+            <button onClick={resetMap} className="reset-button">Change City</button>
+
     </div>
   );
 };

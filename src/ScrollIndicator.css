@@ -1,8 +1,6 @@
 .scroll-indicator {
-    position: absolute;
-    bottom: 12px;
-    right: 1%;
-    transform: translateX(-50%);
+    position: relative;
+    padding-left: 10vh !important;
     animation: bounce 2s infinite;
 }
 

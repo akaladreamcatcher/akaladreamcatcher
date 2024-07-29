@@ -203,11 +203,9 @@ function App() {
 
     plugins: {
       legend: {
-        position: 'right', // Place legend on the right side of the chart
+       display: 'none', // Place legend on the right side of the chart
 
-        labels: {
-          color: 'white' // Make legend labels white
-        }
+
       },
       tooltip: {
         bodyColor: 'white' // Make tooltip labels white
@@ -287,8 +285,7 @@ function App() {
 
           <div className="section">
             <div className="container" style={{
-              left: '5%',
-              height: '70vh',
+              height: 'auto',
               width: '50vh',
             }}>
               <div style={{
@@ -298,13 +295,13 @@ function App() {
                 alignItems: 'center', // This centers children horizontally in a flex column layout
                 height: '100%'
               }}>
-                <h2 className="header fade-in" style={{ textAlign: 'center' }}>
+                <h1 className="header fade-in" style={{ textAlign: 'center', padding: '4vh' }}>
                   AKALA Dream Lifestyle Calculator
-                </h2>
-                <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff' }}>
+                </h1>
+                <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff', padding: '4vh' }}>
                   This lifestyle simulation is designed to help young people understand how much adulthood really costs.
                 </p>
-                <p className="paragraph fade-in" style={{ fontWeight: 'bold', textAlign: 'center', color: '#ffd000', filter: 'drop-shadow(0px 0px 15px #ffb400)' }}>
+                <p className="paragraph fade-in" style={{ fontWeight: 'bold', textAlign: 'center', padding: '4vh' , color: '#ffd000', filter: 'drop-shadow(0px 0px 15px #ffb400)' }}>
                   Scroll down to proceed through the experience.
                 </p>
                 <ContinueButton onContinue={moveNext} />
@@ -314,22 +311,22 @@ function App() {
 
 
           <div className="section">
-            <div className="container" style={{ left: '10vh', height: '70vh', width: '90vh', backgroundImage: 'none', backdropFilter: 'none', border: 'none' }}>
+            <div className="container" style={{ height: '70vh', width: '90vh', backgroundImage: 'none', backdropFilter: 'none', border: 'none' }}>
 
-              <h2 className="header fade-in" style={{ width: '100vh', position: 'absolute', top: 0, left: '60%', transform: 'translateX(-50%)', filter: 'drop-shadow(0px 0px 15px #000000)', zIndex: 1 }}>
+              <h2 className="header fade-in" style={{ width: '100vh', position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', lineHeight: '3vh', marginBottom: '3vh', filter: 'drop-shadow(0px 0px 15px #000000)', zIndex: 10000 }}>
                 What city do you want to live in?
               </h2>    <div className='mapBorder'><MapboxCitySelector onSelectCity={(city) => handleChange('city', city)} />
-</div>
+              </div>
             </div>
             <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
+              <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
+            
           </div>
           <div className="section">
             <div className="container">
-              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faBaby} />
+              <div className="container-header"> <FontAwesomeIcon className="icon fade-in" icon={faBaby} />
 
-              <h2 className="header fade-in">How many kids do you want?</h2>
+                <h2 className="header fade-in">How many kids do you want?</h2></div>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
                   onClick={() => handleChange('kids', lifestyle.kids + 1)}
@@ -349,17 +346,17 @@ function App() {
 
               </div>
             </div>
-            <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
-
+             <div className='continueDiv'>
+              <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
           </div>
 
           <div className="section">
             <div className="container">
-              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faBed} />
+              <div className="container-header">
+                <FontAwesomeIcon className="icon fade-in" icon={faBed} />
 
-              <h2 className="header fade-in" >How many bedrooms will your house have?</h2>
+                <h2 className="header fade-in" >How many bedrooms will your house have?</h2>
+              </div>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
                   onClick={() => handleChange('bedrooms', lifestyle.bedrooms + 1)}
@@ -378,17 +375,20 @@ function App() {
                 />
 
               </div>     </div>
-            <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
+              <div className='continueDiv'>
+              <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
 
           </div>
           <div className="section">
             <div className="container">
-              <div className='input-container'>
-                <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faHouse} />
+                <div className="container-header">
 
-                <h2 className="header fade-in" >Do you plan on renting or purchasing your home?</h2>
+                  <FontAwesomeIcon className="icon fade-in"  icon={faHouse} />
+
+                  <h2 className="header fade-in" >Do you plan on renting or purchasing your home?</h2>
+                </div>
+              <div className='input-container'>
+
                 <div className='button-container fade-in'>
 
                   <button
@@ -408,17 +408,20 @@ function App() {
 
             </div>
             <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
+              <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
 
 
           </div>
 
           <div className="section">
             <div className="container">
-              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faUtensils} />
+              <div className="container-header">
 
-              <h2 className="header fade-in">How often do you plan on eating out per week?</h2>
+                <FontAwesomeIcon className="icon fade-in" icon={faUtensils} />
+
+                <h2 className="header fade-in">How often do you plan on eating out per week?</h2>  </div>
+                <div className="container-dining">     
+
               <div className='input-container'>
                 <div className='button-container fade-in'>
                   <button onClick={() => handleChangeDebounced('diningOutFrequency', Math.max(0, lifestyle.diningOutFrequency + 1))}
@@ -433,7 +436,7 @@ function App() {
                     aria-label="Decrease dining out frequency">-</button>
                 </div>
               </div>
-              <h2 className="header fade-in">Meal Price Level</h2>
+              <h3 className="header fade-in">Meal Price Level</h3>
               <div className='button-container fade-in'>
                 {Object.entries(priceLevels).map(([symbol, level]) => (
                   <button key={symbol} onClick={() => handleChange('diningOutCostLevel', level)}
@@ -442,17 +445,17 @@ function App() {
                   </button>
                 ))}
               </div>
+              </div>
             </div>
             <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
-          </div>
+            <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>    </div>
 
           <div className="section">
-            <div className="container">
-              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faCar} />
+            <div className="container">   <div className="container-header">
 
-              <h2 className="header fade-in" >How many vehicles do you want?</h2>
+              <FontAwesomeIcon className="icon fade-in"  icon={faCar} />
+
+              <h2 className="header fade-in" >How many vehicles do you want?</h2>   </div>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
                   onClick={() => handleChange('vehicles', lifestyle.vehicles + 1)}
@@ -473,28 +476,26 @@ function App() {
               </div>
             </div>
             <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
-
+            <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
           </div>
 
           <div className="section">
-            <div className="container">
-              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faCar} />
+            <div className="container"> <div className="container-header">
 
-              <h2 className="header fade-in">What make of vehicle do you want to drive?</h2>
+              <FontAwesomeIcon className="icon fade-in"  icon={faCar} />
+
+              <h2 className="header fade-in">What make of vehicle do you want to drive?</h2>       </div>
               <VehicleSelection selectedMake={lifestyle.vehicleMake} onSelect={(make) => handleChange('vehicleMake', make)} />
             </div>
             <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
-
+            <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
           </div>
           <div className="section">
-            <div className="container">
-              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faCar} />
+            <div className="container">              <div className="container-header">
 
-              <h2 className=" header fade-in" >Do you want to buy a New or Used Car?</h2>
+              <FontAwesomeIcon className="icon fade-in"  icon={faCar} />
+
+              <h2 className=" header fade-in" >Do you want to buy a New or Used Car?</h2>       </div>
               <div className='input-container'>
                 <button
                   className={`button ${lifestyle.vehicleCondition === 'new' ? 'selected' : 'unselected'}`}
@@ -511,15 +512,14 @@ function App() {
               </div>
             </div>
             <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
-
+              <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
           </div>
           <div className="section">
-            <div className="container">
-              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faSuitcase} />
+            <div className="container">              <div className="container-header">
 
-              <h2 className=" header fade-in" >How often do you want to go on vacation each year?</h2>
+              <FontAwesomeIcon className="icon fade-in"  icon={faSuitcase} />
+
+              <h2 className=" header fade-in" >How often do you want to go on vacation each year?</h2>        </div>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
                   onClick={() => handleChange('vacationsPerYear', lifestyle.vacationsPerYear + 1)}
@@ -538,16 +538,15 @@ function App() {
                 />
 
               </div>   </div>
-            <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
-
+              <div className='continueDiv'>
+              <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
           </div>
           <div className="section">
-            <div className="container">
-              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faSchool} />
+            <div className="container">              <div className="container-header">
 
-              <h2 className=" header fade-in" >Do you want your kids to enroll in public or private school?</h2>
+              <FontAwesomeIcon className="icon fade-in"  icon={faSchool} />
+
+              <h2 className=" header fade-in" >Do you want your kids to enroll in public or private school?</h2>      </div>
               <div className='input-container'>
                 <div className='button-container fade-in'>
 
@@ -569,15 +568,14 @@ function App() {
             </div>
 
             <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
-
+            <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
           </div>
           <div className="section">
-            <div className="container">
-              <FontAwesomeIcon className="icon fade-in" style={{ height: '5vh', width: '5vh', position: 'absolute', top: '10vh', left: '11vh', color: '#7eb9fc' }} icon={faWheelchair} />
+            <div className="container">              <div className="container-header">
 
-              <h2 className=" header fade-in" >What age do you want to retire?</h2>
+              <FontAwesomeIcon className="icon fade-in"  icon={faWheelchair} />
+
+              <h2 className=" header fade-in" >What age do you want to retire?</h2>    </div>
               <div className='input-container'>
                 <div className='button-container fade-in'>           <button
                   onClick={() => handleChange('retirementAge', lifestyle.retirementAge + 1)}
@@ -596,10 +594,8 @@ function App() {
                 />
 
               </div>      </div>
-            <div className='continueDiv'>
-              <ContinueButton onContinue={moveNext} /></div>
-            <ScrollIndicator />
-
+              <div className='continueDiv'>
+              <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
           </div>
           <div className="section">
             <div className="container" style={{ left: '5%', height: '80vh', width: '130vh', padding: '4vh' }}>
@@ -607,7 +603,7 @@ function App() {
                 {/* Left Column for Salary Calculation */}
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 1, marginRight: '20px' }}>
 
-                  <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#60a9fc', filter: 'drop-shadow(0px 0px 10px #000000)'   }}>Required Salary: </p>
+                  <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#60a9fc', filter: 'drop-shadow(0px 0px 10px #000000)' }}>Required Salary: </p>
                   <h2 className="header fade-in" style={{ textAlign: 'center' }}>
                     <CountUp
                       key={`${prevSalary}-${currentSalary}`} // Corrected the use of template string
