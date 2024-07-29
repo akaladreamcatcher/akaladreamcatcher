@@ -126,6 +126,15 @@ button:active {
 
 @media (min-width: 1025px) {
 
+  .breakdown-container {
+
+   display: flex; 
+   flexDirection: row; 
+   
+   justifyContent: space-between; 
+   height: 100%;
+  }
+
   .mapBorder {
     position: relative; /* This allows absolute positioning inside it */
     height: 80vh;
@@ -325,6 +334,15 @@ backdrop-filter: blur(20px);
 }
 
 @media (max-width: 1024px) {
+
+  .breakdown-container {
+
+    display: flex; 
+    flexDirection: column; 
+    
+    justifyContent: space-between; 
+    height: auto;
+   }
 
   .mapBorder {
     position: relative; /* This allows absolute positioning inside it */

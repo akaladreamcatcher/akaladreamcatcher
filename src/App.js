@@ -599,7 +599,7 @@ function App() {
           </div>
           <div className="section">
             <div className="container" style={{ left: '5%', height: '80vh', width: '130vh', padding: '4vh' }}>
-              <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', height: '100%' }}>
+              <div className="breakdown-container">
                 {/* Left Column for Salary Calculation */}
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 1, marginRight: '20px' }}>
 
