@@ -319,10 +319,9 @@ h1 {
   
   background-size: cover;
   background-repeat: no-repeat;
-  ////////* box-shadow: -30px -30px 1000px 0px #d6d6d6d5 ; */
   border-radius: 20px;
-   padding: 10vh;
-   z-index: 100;
+  padding: 10vh;
+  z-index: 100;
  
 
     background-image: linear-gradient(45deg, #dadada65, #9494949a, #6161614d, #979797c4);
