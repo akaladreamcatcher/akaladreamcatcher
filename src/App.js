@@ -203,7 +203,7 @@ function App() {
 
     plugins: {
       legend: {
-       display: 'none', // Place legend on the right side of the chart
+       display: false, // Place legend on the right side of the chart
 
 
       },
@@ -246,7 +246,7 @@ function App() {
   );
 
   const TableRowWithAdjustment = ({ itemLabel, itemValue, onIncrease, onDecrease }) => (
-    <tr>
+    <tr style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
       <td style={{ textAlign: 'right', verticalAlign: 'middle' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
           <AdjustmentButton label="-" onClick={onDecrease} />
@@ -254,7 +254,7 @@ function App() {
           <AdjustmentButton label="+" onClick={onIncrease} />
         </div>
       </td>
-      <td style={{ fontWeight: 'normal', verticalAlign: 'middle', width: '150px' }}>{itemLabel}</td>
+      <td style={{ fontWeight: 'normal', color: '#ffffffab', verticalAlign: 'middle', textAlign: 'right', paddingTop: '1vh', width: '150px' }}>{itemLabel}</td>
 
     </tr>
   );
@@ -295,10 +295,10 @@ function App() {
                 alignItems: 'center', // This centers children horizontally in a flex column layout
                 height: '100%'
               }}>
-                <h1 className="header fade-in" style={{ textAlign: 'center', padding: '4vh' }}>
+                <h1 className="header fade-in" style={{ textAlign: 'center', marginBottom: '0', padding: '4vh' }}>
                   AKALA Dream Lifestyle Calculator
                 </h1>
-                <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff', padding: '4vh' }}>
+                <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff', padding: '4vh', marginBottom: '0' }}>
                   This lifestyle simulation is designed to help young people understand how much adulthood really costs.
                 </p>
                 <p className="paragraph fade-in" style={{ fontWeight: 'bold', textAlign: 'center', padding: '4vh' , color: '#ffd000', filter: 'drop-shadow(0px 0px 15px #ffb400)' }}>
@@ -310,10 +310,10 @@ function App() {
           </div>
 
 
-          <div className="section">
-            <div className="container" style={{ height: '70vh', width: '90vh', backgroundImage: 'none', backdropFilter: 'none', border: 'none' }}>
+          <div className="section" style={{    overflow: 'hidden'}}>
+            <div className="container" style={{ height: '100vh', width: '90vh', backgroundImage: 'none', backdropFilter: 'none', border: 'none' }}>
 
-              <h2 className="header fade-in" style={{ width: '100vh', position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', lineHeight: '3vh', marginBottom: '3vh', filter: 'drop-shadow(0px 0px 15px #000000)', zIndex: 10000 }}>
+              <h2 className="header fade-in" style={{ width: '100vw', position: 'absolute', top: '3vh', left: '50%', transform: 'translateX(-50%)', lineHeight: '3vh', marginTop: '3vh', filter: 'drop-shadow(0px 0px 15px #000000)', zIndex: 10000 }}>
                 What city do you want to live in?
               </h2>    <div className='mapBorder'><MapboxCitySelector onSelectCity={(city) => handleChange('city', city)} />
               </div>
@@ -422,8 +422,10 @@ function App() {
                 <h2 className="header fade-in">How often do you plan on eating out per week?</h2>  </div>
                 <div className="container-dining">     
 
-              <div className='input-container'>
-                <div className='button-container fade-in'>
+              <div className='input-container' style={{display: 'flex', flexDirection: 'column'}}>
+              <h3 className="header fade-in">Weekly Meals</h3>
+
+                <div className='button-container fade-in' style= {{alignItems: 'center', height: 'auto'}}>
                   <button onClick={() => handleChangeDebounced('diningOutFrequency', Math.max(0, lifestyle.diningOutFrequency + 1))}
                     aria-label="Increase dining out frequency">+</button>
                   <input className="fade-in"
@@ -436,8 +438,9 @@ function App() {
                     aria-label="Decrease dining out frequency">-</button>
                 </div>
               </div>
-              <h3 className="header fade-in">Meal Price Level</h3>
               <div className='button-container fade-in'>
+              <h3 className="header fade-in">Meal Price Level</h3>
+
                 {Object.entries(priceLevels).map(([symbol, level]) => (
                   <button key={symbol} onClick={() => handleChange('diningOutCostLevel', level)}
                     className={lifestyle.diningOutCostLevel === level ? 'selected' : ''}>
@@ -599,13 +602,14 @@ function App() {
               <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
           </div>
           <div className="section">
-            <div className="container" style={{ left: '5%', height: '80vh', width: '130vh', padding: '4vh' }}>
-              <div className="breakdown-container">
+            <div className="container" style={{height: '70vh', width: '100vw', marginTop: '20vh'}}>
+              <div className="breakdown-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: '1'}}>
                 {/* Left Column for Salary Calculation */}
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 1, marginRight: '20px' }}>
+                <div className='breakdownTitleOuter'>
+                <div className='breakdownTitle'>
 
-                  <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#60a9fc', filter: 'drop-shadow(0px 0px 10px #000000)' }}>Required Salary: </p>
-                  <h2 className="header fade-in" style={{ textAlign: 'center' }}>
+                  <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff', filter: 'drop-shadow(0px 0px 10px #000000)' }}>Required Salary: </p>
+                  <h2 className="breakdownHeader fade-in" style={{ textAlign: 'center' }}>
                     <CountUp
                       key={`${prevSalary}-${currentSalary}`} // Corrected the use of template string
                       start={prevSalary}
@@ -617,40 +621,37 @@ function App() {
                       prefix="$"
                     />
                   </h2>
+                  </div>
+
                   {showButton && (
-                    <button onClick={handleCalculateClick} style={{ whiteSpace: 'nowrap', padding: '10px 20px' }}>
+                    <button onClick={handleCalculateClick} style={{ whiteSpace: 'normal', lineHeight: '1rem', height: '8vh', fontSize: '1rem', width: '80%', padding: '10px 20px' }}>
                       Show Breakdown
                     </button>
                   )}
                 </div>
 
+
                 {/* Right Column for Cost Breakdown */}
                 {isVisible && (
-                  <div className="cost-breakdown" style={{
-                    flex: 3,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    borderLeft: '3px solid #ffffff54', // Add a gray border line to the left
-                    paddingLeft: '20px' // Add some padding to separate text from the border
-                  }}>
-                    <h3>Cost Breakdown:</h3>
+                  <div className="cost-breakdown">
                     <Pie data={data} options={options} />
+                    <p className='costBreakdown'>Cost Breakdown:</p>
 
-                    <table style={{ width: '150%', borderCollapse: 'separate', borderSpacing: '0 0px' }}> {/* Added borderSpacing for space between rows */}
+
+                    <table style={{ display: 'flex', borderCollapse: 'separate', borderSpacing: '0 0px' }}> {/* Added borderSpacing for space between rows */}
                       <tbody>
-                        <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Base living cost for one adult:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.baseLivingCost}</td>
+                        <tr className='breakdownItem'>
+                        <td className='breakdownDescribe'><td className='tdLabel'>Base living cost for one adult:</td>
+                          <td className='tdNumber'>{lifestyle.costBreakdown.baseLivingCost}</td></td>
                         </tr>
-                        <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Additional cost for a second parent:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.secondParentCost}</td>
+                        <tr className='breakdownItem'>
+                        <td className='breakdownDescribe'><td className='tdLabel'>Additional cost for a second parent:</td>
+                          <td className='tdNumber'>{lifestyle.costBreakdown.secondParentCost}</td></td>
                         </tr>
-                        <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Vehicle cost:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.vehicleCost}</td>
-                          <td>
+                        <tr className='breakdownItem'>
+                        <td className='breakdownDescribe'><td className='tdLabel'>Vehicle cost:</td>
+                          <td className='tdNumber'>{lifestyle.costBreakdown.vehicleCost}</td></td>
+                          <td className='tdAdjust'>
                             <TableRowWithAdjustment
                               itemLabel="Number of vehicles"
                               itemValue={lifestyle.vehicles}
@@ -660,10 +661,10 @@ function App() {
 
                           </td>
                         </tr>
-                        <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Dining out costs per year:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.diningOutCost}</td>
-                          <td>
+                        <tr className='breakdownItem'>
+                        <td className='breakdownDescribe'><td className='tdLabel'>Dining out costs per year:</td>
+                          <td className='tdNumber'>{lifestyle.costBreakdown.diningOutCost}</td></td>
+                          <td className='tdAdjust'>
                             <TableRowWithAdjustment
                               itemLabel="Meals out per week"
                               itemValue={lifestyle.diningOutFrequency}
@@ -673,30 +674,33 @@ function App() {
                           </td>
 
                         </tr>
-                        <tr>
-                          <td style={{ width: '200px', fontWeight: 'normal', verticalAlign: 'middle' }}>Housing cost:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.housingCost}</td>
-                          <td> <TableRowWithAdjustment
+                        <tr className='breakdownItem'>
+                        <td className='breakdownDescribe'><td className='tdLabel'>Housing cost:</td>
+                          <td className='tdNumber'>{lifestyle.costBreakdown.housingCost}</td></td>
+                          <td className='tdAdjust'>
+                          <TableRowWithAdjustment
                             itemLabel="Number of bedrooms"
                             itemValue={lifestyle.bedrooms}
                             onIncrease={() => handleChange('bedrooms', lifestyle.bedrooms + 1)}
                             onDecrease={() => handleChange('bedrooms', Math.max(0, lifestyle.bedrooms - 1))}
                           /></td>
                         </tr>
-                        <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Cost for kids:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.kidsCost}</td>
-                          <td> <TableRowWithAdjustment
+                        <tr className='breakdownItem'>
+                        <td className='breakdownDescribe'><td className='tdLabel'>Cost for kids:</td>
+                          <td className='tdNumber'>{lifestyle.costBreakdown.kidsCost}</td></td>
+                          <td className='tdAdjust'>
+                          <TableRowWithAdjustment
                             itemLabel="Number of kids"
                             itemValue={lifestyle.kids}
                             onIncrease={() => handleChange('kids', lifestyle.kids + 1)}
                             onDecrease={() => handleChange('kids', Math.max(0, lifestyle.kids - 1))}
                           /></td>
                         </tr>
-                        <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Vacation costs per year:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.vacationCost}</td>
-                          <td> <TableRowWithAdjustment
+                        <tr className='breakdownItem'>
+                        <td className='breakdownDescribe'><td className='tdLabel'>Vacation costs per year:</td>
+                          <td className='tdNumber'>{lifestyle.costBreakdown.vacationCost}</td></td>
+                          <td className='tdAdjust'>
+                          <TableRowWithAdjustment
                             itemLabel="Vacations per year"
                             itemValue={lifestyle.vacationsPerYear}
                             onIncrease={() => handleChange('vacationsPerYear', lifestyle.vacationsPerYear + 1)}
@@ -704,20 +708,18 @@ function App() {
                           /></td>
 
                         </tr>
-                        <tr>
-                          <td style={{ fontWeight: 'normal', verticalAlign: 'middle' }}>Annual retirement savings:</td>
-                          <td style={{ textAlign: 'right', verticalAlign: 'middle', fontSize: '1.2rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.annualRetirementSavings}</td>
-                          <td><TableRowWithAdjustment
+                        <tr className='breakdownItem'>
+                        <td className='breakdownDescribe'><td className='tdLabel'>Annual retirement savings:</td>
+                          <td className='tdNumber'>{lifestyle.costBreakdown.annualRetirementSavings}</td></td>
+                          <td className='tdAdjust'>
+                          <TableRowWithAdjustment
                             itemLabel="Retirement Age"
                             itemValue={lifestyle.retirementAge}
                             onIncrease={() => handleChangeDebounced('retirementAge', lifestyle.retirementAge + 1)}
                             onDecrease={() => handleChangeDebounced('retirementAge', Math.max(0, lifestyle.retirementAge - 1))}
                           /></td>
                         </tr>
-                        <tr>
-                          <td style={{ fontWeight: 'bold', verticalAlign: 'middle', fontSize: '1rem' }}>Total required annual salary:</td>
-                          <td style={{ fontWeight: 'bold', textAlign: 'right', verticalAlign: 'middle', fontSize: '1.6rem', paddingRight: '40px' }}>{lifestyle.costBreakdown.totalRequiredSalary}</td>
-                        </tr>
+                        
                       </tbody>
                     </table>
                   </div>

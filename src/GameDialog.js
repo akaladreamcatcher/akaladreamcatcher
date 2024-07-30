@@ -123,9 +123,9 @@ const GameDialog = ({ onComplete }) => {
 
   return (
     <div className='dialog-overlay' onClick={handleNext} onMouseMove={handleMouseMove}>
-       <div className='character-svg'>
+      <div className='svgDiv'> <div className='character-svg'>
           <img src={dialogs[currentDialog].svgPath} alt='Character' />
-        </div>
+        </div></div>
         <div className='dialog-box' style={{'--rotateX': `${transform.x}deg`, '--rotateY': `${transform.y}deg`, opacity: opacity, transition: 'opacity 0.25s' }}>
        
         <p className='dialog-text'>{text}</p>

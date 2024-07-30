@@ -1,6 +1,5 @@
 .scroll-indicator {
     position: relative;
-    padding-left: 10vh !important;
     animation: bounce 2s infinite;
 }
 

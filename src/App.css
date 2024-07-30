@@ -126,6 +126,20 @@ button:active {
 
 @media (min-width: 1025px) {
 
+  .header {
+font-size: 2rem;
+
+  }
+
+  .cost-breakdown {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 3px solid #ffffff54;
+    padding-left: 20px; 
+  }
+
   .breakdown-container {
 
    display: flex; 
@@ -334,38 +348,136 @@ backdrop-filter: blur(20px);
 
 @media (max-width: 1024px) {
 
+  .breakdownHeader {
+    font-size: 2rem;
+    line-height: 1rem;
+    margin: 0;
+
+    
+      }
+
+      .cost-breakdown p{
+        font-size: 1rem !important;
+        color: #ffffff; 
+        padding-left: 4vw;
+      }
+    
+
+
+      .breakdownTitle {
+      display: flex;
+     flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      justify-content: space-around;
+       flex: 1;
+margin-top: 2vh;
+padding: 0;  
+width: 100vw;  
+  }
+
+.breakdownTitleOuter {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin-bottom: 2vh;
+
+}
+
+
+      .breakdownItem{
+        width: 80vw;
+        display: flex;
+        flex-direction: row;
+        border: 1px solid #ffffff33;
+        justify-content: space-between;
+        margin: 1vh;
+        padding: 1vh;
+        border-radius: 12px;
+      }
+
+      .tdAdjust {
+        display: flex;
+        justify-content: center;
+      }
+
+      .tdNumber {
+       text-align: left; 
+       vertical-align: middle; 
+       justify-content: flex-start;
+       font-size: 1.2rem;
+      padding-right: 10px;
+      padding-top: 1vh;
+      display: flex;
+      }
+
+      .tdLabel {
+        justify-content: flex-start;
+        text-align: left; 
+font-weight: normal; 
+display: flex;
+color: #ffffffab;
+      }
+
+
+
+  .cost-breakdown {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 0px solid #ffffff54;
+    padding-left: 20px; 
+  }
+
   .breakdown-container {
 
     display: flex; 
     flexDirection: column; 
     
     justifyContent: space-between; 
-    height: auto;
+    height: 70vh;
+    width: 100vw;
+    
+    padding: 0vh;
+    margin: 0vh;
    }
 
   .mapBorder {
     position: relative; /* This allows absolute positioning inside it */
-    height: 40vh;
-    margin-bottom: 20vh;
+    height: 70vh !important;
     width: 100vw;
+    padding-top: 5vh;
     
-    background-image: url('parchment.svg');
-    background-size: contain; /* Adjust as needed */
+    background-image: url('parchmentTall.svg');
+    background-size: 100% 100% !important; /* Adjust as needed */
     background-repeat: no-repeat;
     background-position: center; /* Centers the background */
     z-index: 1;
+    display: flex; 
+    align-items: center;
+    flex-direction: column;
+
+    overflow: hidden;
   }
   
   /* App.css */
   #map {
     position: relative;
     width: 80vw !important;
-    height: 25vh !important; /* Ensure this is set */
+    height: 45vh !important; /* Ensure this is set */
     margin-top: 5vh; /* Optional: Adjust as needed */
 
     cursor: none !important;
     left: 0vh !important;
   }
+
+  mapboxgl-canvas {
+    height: 80vh !important;
+  }
+
+ 
   
   /* App.css */
   .mapboxgl-popup-content {
@@ -457,7 +569,6 @@ input[type="number"] {
   font-family: 'DynaPuff', cursive;
 
 
-  width: 4rem; /* Less width than before */
   padding: 1vh;
   text-align: center;
   border: 2px solid #cccccc65;
@@ -524,7 +635,7 @@ h1 {
     display: flex;
     flex-direction: column;
     padding: 1vh;
-    margin-top: 1vh;
+    margin-top: 0vh;
   }
 
   .input-container{
