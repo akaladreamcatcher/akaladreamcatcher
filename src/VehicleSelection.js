@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { carPrices } from './data'; // Adjust the path as necessary
 import './VehicleSelection.css'; // Import the new stylesheet
 
@@ -19,7 +19,7 @@ const VehicleSelection = ({ selectedMake, onSelect }) => {
   };
 
   // Reset currentIndex if filteredCars length changes to prevent out-of-bounds errors
-  React.useEffect(() => {
+  useEffect(() => {
     if (currentIndex >= filteredCars.length) {
       setCurrentIndex(0);
     }
@@ -38,15 +38,22 @@ const VehicleSelection = ({ selectedMake, onSelect }) => {
         <button onClick={handlePrev} className="carousel-button">{"<"}</button>
         <div className="carousel-item">
           {filteredCars.length > 0 ? (
-            <button
-              className={`vehicle-button ${selectedMake === filteredCars[currentIndex]?.make ? 'selected' : ''}`}
-              onClick={() => onSelect(filteredCars[currentIndex]?.make)}
-            >
-              {filteredCars[currentIndex]?.make}
-            </button>
+            <>
+              <button
+                className={`vehicle-button ${selectedMake === filteredCars[currentIndex]?.make ? 'selected' : ''}`}
+                onClick={() => onSelect(filteredCars[currentIndex]?.make)}
+              style={{backgroundImage: 'linear-gradient(to bottom, #ffffff00, #ffffff00)', height: '10vh', backgroundColor:'transparent'}}>
+                <img
+                  src={`cars/${filteredCars[currentIndex].make}.png`}
+                  alt={`${filteredCars[currentIndex].make} logo`}
+                  style={{ width: '80px', height: 'auto', marginTop:'3vh', backgroundSize: 'contain', }} // Adjust size as necessary
+                />
+              </button>
+            </>
           ) : (
             <p>No results found</p>
           )}
+          <h3 style={{color: '#ffffff77', fontWeight: 'normal', fontStyle: 'italic'}}>Tap to select</h3>
         </div>
         <button onClick={handleNext} className="carousel-button">{">"}</button>
       </div>

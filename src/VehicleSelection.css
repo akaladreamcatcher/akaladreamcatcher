@@ -30,7 +30,11 @@
   }
   
   .carousel-item {
-    margin: 0 2vw;
+width: 200px;
+height: 160px;
+display:flex;
+flex-direction: column;
+justify-content: flex-end;
   }
   
   .vehicle-button {

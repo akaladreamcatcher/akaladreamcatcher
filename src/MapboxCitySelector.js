@@ -1,4 +1,6 @@
 // MapboxCitySelector.js
+/* global fullpage_api */
+
 import React, { useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -31,6 +33,16 @@ const MapboxCitySelector = ({ onSelectCity }) => {
 
         // Add navigation controls (zoom buttons)
         mapInstance.addControl(new mapboxgl.NavigationControl(), 'top-right');
+        
+        mapInstance.on('touchstart', function() {
+          fullpage_api.setAllowScrolling(false);
+          fullpage_api.setKeyboardScrolling(false);
+        });
+    
+        mapInstance.on('touchend', function() {
+          fullpage_api.setAllowScrolling(true);
+          fullpage_api.setKeyboardScrolling(true);
+        });
 
 
     Object.keys(medianRentPrices).forEach((city) => {

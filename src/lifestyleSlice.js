@@ -5,7 +5,7 @@ const initialState = {
   kids: 0,
   city: 'Chicago',
   vehicles: 0,
-  vehicleMake: '',
+  vehicleMake: 'Ford',
   vehicleCondition: 'new', // new or used
   vacationsPerYear: 0,
   diningOutFrequency: 0,

@@ -66,9 +66,10 @@ function App() {
     fullpageInstanceRef.current = new fullpage(fullpageRef.current, {
       autoScrolling: true,
       navigation: true,  // Enable the navigation dots
+      navigationPosition: 'left',
 
       scrollHorizontally: true,
-      loopBottom: true,
+      loopBottom: false,
       sectionsColor: [],
       afterLoad: (origin, destination, direction) => {
         setCurrentSection(destination.index);
@@ -99,6 +100,12 @@ function App() {
   const moveNext = () => {
     fullpageInstanceRef.current.moveSectionDown();
   };
+
+  const moveFirst = () => {
+    // Assuming the first section is indexed as 1
+    fullpageInstanceRef.current.moveTo(1);
+  };
+  
 
 
   // Revised handleChange to use setField
@@ -296,7 +303,7 @@ function App() {
                 height: '100%'
               }}>
                 <h1 className="header fade-in" style={{ textAlign: 'center', marginBottom: '0', padding: '4vh' }}>
-                  AKALA Dream Lifestyle Calculator
+                  The Dreamcatcher <span style={{fontSize: '1.6rem', opacity: '0.5'}}>Created by AKALA</span>
                 </h1>
                 <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff', padding: '4vh', marginBottom: '0' }}>
                   This lifestyle simulation is designed to help young people understand how much adulthood really costs.
@@ -603,7 +610,7 @@ function App() {
           </div>
           <div className="section">
             <div className="container" style={{height: '70vh', width: '100vw', marginTop: '20vh'}}>
-              <div className="breakdown-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: '1'}}>
+              <div className="breakdown-container" style={{ display: 'flex',overflowY:'visible',  flexDirection: 'column', justifyContent: 'center', flex: '1'}}>
                 {/* Left Column for Salary Calculation */}
                 <div className='breakdownTitleOuter'>
                 <div className='breakdownTitle'>
@@ -726,8 +733,14 @@ function App() {
                 )}
               </div>
             </div>
-            {/*  <ContinueButton onContinue={moveNext} />
-              <ScrollIndicator// /> */}
+            <div className='continueDiv'>
+          <ContinueButton
+        onContinue={moveFirst}
+        buttonText="Restart your journey"
+        buttonStyle={{ width: '100vw', marginTop: '5vh' }}
+      />
+    </div>
+          
           </div>
 
         </div>

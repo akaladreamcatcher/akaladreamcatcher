@@ -78,6 +78,11 @@ button:hover {
   box-shadow: inset 0px 0px 20px rgba(255, 60, 0, 0.521); /* Inner shadow */
 }
 
+.vehicle-button:hover {
+  box-shadow: inset 0px 0px 20px #ffffff !important; /* Inner shadow */
+
+}
+
 button:active {
   background-image: linear-gradient(70deg, #ffd000, #ffc400);
   transform: scale(1.02); /* Slightly reduce the scale to give a pressed effect */
@@ -103,24 +108,58 @@ button:active {
 }
 
 #fp-nav ul {
-  scale: 1.2;
+  scale: 1.3;
+}
+
+#fp-nav {
+  top: 0% !important;
+  -webkit-transform: rotate(270deg)!important;
+  -moz-transform: rotate(270deg)!important;
+  -o-transform: rotate(270deg)!important;
+  -ms-transform: rotate(270deg)!important;
+  transform: rotate(270deg)!important;
+}
+
+#fp-nav.fp-left {
+
+  left: 46% !important;
 }
 
 /* Custom styles for fullPage.js navigation dots */
 #fp-nav ul li a span,
 .fp-slidesNav ul li a span {
-    background: white !important; /* Change dot color to white */
-    width: 12px; /* Increase the size of the dots */
-    height: 12px;
-    margin: -6px 0 0 -6px;
+    background-image: linear-gradient(90deg, #ffc400, #ffc400, #ffc300) !important; /* Change dot color to white */
+    width: 48px !important; /* Increase the size of the dots */
+    height: 21px !important;
+    margin: 0px !important;
+    margin-left: 6px !important;
+    border-radius: 4px 0px 0px 4px !important;
+    border: 0px solid #ffc400 !important; /* Ensuring the border takes the gradient */
+box-shadow: 0px 0px 5px 0px #55555533;
+    top: 0px !important;
+
+}
+
+#fp-nav ul li, .fp-slidesNav ul li {
+  display: block;
+  width: 21px !important; /* Increase the size of the dots */
+  height: 21px !important;
+  margin: 0px !important;
+   position: relative;
 }
 
 #fp-nav ul li a.active span,
 .fp-slidesNav ul li a.active span {
-    width: 24px; /* Slightly larger size for the active dot */
-    height: 24px;
-    margin: -8px 0 0 -8px;
+  background-image: linear-gradient(90deg, orange, orange, #ffc300) !important; /* Change dot color to white */
+  width: 54px !important; /* Slightly larger size for the active dot */
+    height: 21px !important;
+    margin-left: 0px !important;
+    top: 0% !important;
+
+    margin: 0px 0 0 0px;
 }
+
+
 
 
 
@@ -144,7 +183,6 @@ font-size: 2rem;
 
    display: flex; 
    flexDirection: row; 
-   
    justifyContent: space-between; 
    height: 100%;
   }
@@ -173,6 +211,7 @@ font-size: 2rem;
     margin-bottom: 5vh;
     cursor: none !important;
     left: 0vh !important;
+    touch-action: none;
   }
   
   /* App.css */
@@ -439,7 +478,8 @@ color: #ffffffab;
     justifyContent: space-between; 
     height: 70vh;
     width: 100vw;
-    
+    overflow-x: hidden;
+
     padding: 0vh;
     margin: 0vh;
    }
@@ -725,8 +765,15 @@ h1 {
 .body-gradient-2 {
   position: fixed; /* Positioning context for the pseudo-element */
   min-height: 100vh;
-  background-image: radial-gradient(circle at center, transparent, rgba(255, 255, 255, .8) 99%);
-  z-index: 50; /* Set to 0 to be the base layer */
+  background-image: linear-gradient(
+    180deg, 
+    #ffffff,  /* Transition starts at 25% and remains solid white up to this point */
+    #ffffff00, /* Begins transparent transition from this point */
+    #ffffff00, /* Ends transparent transition at this point */
+    #ffffff,  /* From 75% to 100%, it is solid white again */
+    #ffffff
+  ); 
+    z-index: 0; /* Set to 0 to be the base layer */
 }
 
 .body-gradient-2::after {
@@ -736,12 +783,20 @@ h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: radial-gradient(circle at center, transparent, rgba(255, 255, 255, .8) 30%);
-  background-size: 100% 100%; /* Start larger to mimic smaller inner radius */
+  background-image: linear-gradient(
+    180deg, 
+    #ffffff,  /* Transition starts at 25% and remains solid white up to this point */
+    #ffffff,  /* Transition starts at 25% and remains solid white up to this point */
+    #ffffff55, /* Begins transparent transition from this point */
+    #ffffff33, /* Ends transparent transition at this point */
+    #ffffff55,  /* From 75% to 100%, it is solid white again */
+    #ffffffab,  /* Transition starts at 25% and remains solid white up to this point */
+    #ffffffab,  /* Transition starts at 25% and remains solid white up to this point */
+    #ffffff
+  );   background-size: 100% 100%; /* Start larger to mimic smaller inner radius */
   background-position: center; /* Ensures the gradient stays centered */
   pointer-events: none;
-  z-index: 50;
-  animation: shrinkGradient 20s ease-out forwards;
+  z-index: 0;
 
 }
 
