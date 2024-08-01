@@ -60,6 +60,21 @@ background-image: linear-gradient(
   
 }
 
+@keyframes fadeGradient {
+  0% {
+      opacity: 100%;
+  }
+
+  50% {
+    opacity: 100%;
+
+}
+
+  100% {
+    opacity: 0%;
+
+  }
+}
 
 /* Styles that apply to viewports less than or equal to 600px wide */
 @media (max-width: 1024px) {
@@ -69,25 +84,41 @@ background-image: linear-gradient(
     left: 0;
     width: 100%;
     height: 100vh;
-    background-image: linear-gradient(
-      180deg, 
-      #ffffff, 
-      #ffffff,  /* Transition starts at 25% and remains solid white up to this point */
-      #ffffffab, /* Begins transparent transition from this point */
-      #ffffffab, /* Ends transparent transition at this point */
-      #ffffff,  /* From 75% to 100%, it is solid white again */
-      #ffffff
-    );    display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     cursor: none;
     z-index: 10000000;
     flex-direction: column;
-  }
+    background-image: linear-gradient(
+  180deg, 
+  #ffffff, 
+  #ffffff,  /* Transition starts at 25% and remains solid white up to this point */
+  #ffffffab, /* Begins transparent transition from this point */
+  #ffffffab, /* Ends transparent transition at this point */
+  #ffffff,  /* From 75% to 100%, it is solid white again */
+  #ffffff
+);
+}
+
+.gradient-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  opacity: 0;
+  animation: fadeGradient 18s ease-out 0s forwards;
+  z-index: -1
+}
+
+
+
 
   .svgDiv {
 width: 100%;
-    align-items: left;
+    align-items: center;
   }
 
   .dialog-box {
@@ -108,11 +139,11 @@ width: 100%;
   }
 
   .character-svg img {
-    position: relative;
+    position: absolute;
     height: 50vw;
     float: left;
-    margin-right: 20px;
-    left: 5vw;
+    top:10%;
+    left: 35%;
    
   }
 

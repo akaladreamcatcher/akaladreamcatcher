@@ -18,7 +18,7 @@ import hoverCursorSVG from './mouse_hover.svg'; // Path to your hover cursor SVG
 import clickCursorSVG from './mouse_click.svg'; // Path to your click cursor SVG
 import GameDialog from './GameDialog';  // Import the GameDialog component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGlobe, faHouse, faBaby, faBed, faFileContract, faUtensils, faCar, faSuitcase, faSchool, faWheelchair } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faBaby, faBed, faUtensils, faCar, faSuitcase, faSchool, faWheelchair } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -37,6 +37,23 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+const withDelay = (Component, delayTime) => {
+  return (props) => {
+    const [isShown, setIsShown] = useState(false);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setIsShown(true);
+      }, delayTime);
+
+      return () => clearTimeout(timer);
+    }, [delayTime]);
+
+    return isShown ? <Component {...props} /> : null;
+  };
+};
+
+const DelayedThreeScene = withDelay(ThreeScene, 5000);
 
 
 function App() {
@@ -57,6 +74,8 @@ function App() {
   const handleDialogComplete = () => {
     setShowDialog(false);
   };
+
+  
 
 
 
@@ -236,16 +255,15 @@ function App() {
     <button
       onClick={onClick}
       style={{
-        backgroundColor: '#ffcd85', // Light orange background
-        color: '#333', // Dark text color for contrast
-        border: 'none',
+        backgroundColor: 'transparent', // Light orange background
+        color: '#00000055', // Dark text color for contrast
+        border: '1px solid #ffffff33',
         borderRadius: '5px',
-        padding: '4px 8px',
+        padding: '4px 10px',
         cursor: 'none',
         margin: '0 5px',
-        fontSize: '16px',
+        fontSize: '24px',
         height: '3vh',
-        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)' // subtle shadow for depth
       }}
     >
       {label}
@@ -257,7 +275,7 @@ function App() {
       <td style={{ textAlign: 'right', verticalAlign: 'middle' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
           <AdjustmentButton label="-" onClick={onDecrease} />
-          <span style={{ width: '10px', fontSize: '1.2rem', textAlign: 'center', margin: '0 10px' }}>{itemValue}</span>
+          <span style={{ width: '10px', fontSize: '1.2rem', textAlign: 'center', margin: '0 10px', display: 'flex', justifyContent: 'center' }}>{itemValue}</span>
           <AdjustmentButton label="+" onClick={onIncrease} />
         </div>
       </td>
@@ -285,30 +303,30 @@ function App() {
       <div className="body-gradient"
       >
         <div><div className="body-gradient-2"
-        ></div><ThreeScene currentSection={currentSection} numberOfKids={lifestyle.kids} numberOfCars={lifestyle.vehicles} numberOfhouses={lifestyle.bedrooms} />
+        ></div><DelayedThreeScene currentSection={currentSection} numberOfKids={lifestyle.kids} numberOfCars={lifestyle.vehicles} numberOfhouses={lifestyle.bedrooms} />
         </div>
 
         <div ref={fullpageRef}>
 
           <div className="section">
             <div className="container" style={{
-              height: 'auto',
-              width: '50vh',
-            }}>
+              height: 'auto', padding: '3vh',   width: '75vw'}}>
               <div style={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center', // This centers children horizontally in a flex column layout
-                height: '100%'
+                height: '100%',
+              
+
               }}>
-                <h1 className="header fade-in" style={{ textAlign: 'center', marginBottom: '0', padding: '4vh' }}>
-                  The Dreamcatcher <span style={{fontSize: '1.6rem', opacity: '0.5'}}>Created by AKALA</span>
+                <h1 className="header fade-in" style={{ textAlign: 'center', fontSize: '2rem', marginBottom: '0', }}>
+                  The Dreamcatcher <span style={{fontSize: '1.4rem', opacity: '0.5'}}>Created by AKALA</span>
                 </h1>
                 <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff', padding: '4vh', marginBottom: '0' }}>
-                  This lifestyle simulation is designed to help young people understand how much adulthood really costs.
+                  This lifestyle simulation is designed to help young people understand how much adulthood really costs. The calculation is not exact, but based on national averages.
                 </p>
-                <p className="paragraph fade-in" style={{ fontWeight: 'bold', textAlign: 'center', padding: '4vh' , color: '#ffd000', filter: 'drop-shadow(0px 0px 15px #ffb400)' }}>
+                <p className="paragraph fade-in" style={{ fontWeight: 'normal', textAlign: 'center', padding: '4vh' , color: '#ffd000', filter: 'drop-shadow(0px 0px 10px #fff)' }}>
                   Scroll down to proceed through the experience.
                 </p>
                 <ContinueButton onContinue={moveNext} />
@@ -318,9 +336,9 @@ function App() {
 
 
           <div className="section" style={{    overflow: 'hidden'}}>
-            <div className="container" style={{ height: '100vh', width: '90vh', backgroundImage: 'none', backdropFilter: 'none', border: 'none' }}>
+            <div className="container" style={{ height: '100vh', width: '90vw', backgroundImage: 'none', backdropFilter: 'none', border: 'none' }}>
 
-              <h2 className="header fade-in" style={{ width: '100vw', position: 'absolute', top: '3vh', left: '50%', transform: 'translateX(-50%)', lineHeight: '3vh', marginTop: '3vh', filter: 'drop-shadow(0px 0px 15px #000000)', zIndex: 10000 }}>
+              <h2 className="header fade-in" style={{ width: '90vw', position: 'absolute', top: '3vh', left: '50%', transform: 'translateX(-50%)', lineHeight: '3vh', marginTop: '3vh', filter: 'drop-shadow(0px 0px 15px #000000)', zIndex: 10000 }}>
                 What city do you want to live in?
               </h2>    <div className='mapBorder'><MapboxCitySelector onSelectCity={(city) => handleChange('city', city)} />
               </div>
@@ -427,15 +445,15 @@ function App() {
                 <FontAwesomeIcon className="icon fade-in" icon={faUtensils} />
 
                 <h2 className="header fade-in">How often do you plan on eating out per week?</h2>  </div>
-                <div className="container-dining">     
+                <div className="container-dining fade-in">     
 
-              <div className='input-container' style={{display: 'flex', flexDirection: 'column'}}>
-              <h3 className="header fade-in">Weekly Meals</h3>
 
-                <div className='button-container fade-in' style= {{alignItems: 'center', height: 'auto'}}>
+                <div className='button-container' style= {{alignItems: 'center', height: 'auto'}}>
+                <h3 className="header">Weekly Meals</h3>
+
                   <button onClick={() => handleChangeDebounced('diningOutFrequency', Math.max(0, lifestyle.diningOutFrequency + 1))}
                     aria-label="Increase dining out frequency">+</button>
-                  <input className="fade-in"
+                  <input 
                     type="number"
                     value={lifestyle.diningOutFrequency}
                     onChange={() => { }} // Disable typing
@@ -444,9 +462,8 @@ function App() {
                   <button onClick={() => handleChangeDebounced('diningOutFrequency', lifestyle.diningOutFrequency - 1)}
                     aria-label="Decrease dining out frequency">-</button>
                 </div>
-              </div>
-              <div className='button-container fade-in'>
-              <h3 className="header fade-in">Meal Price Level</h3>
+              <div className='button-container'>
+              <h3 className="header">Meal Price Level</h3>
 
                 {Object.entries(priceLevels).map(([symbol, level]) => (
                   <button key={symbol} onClick={() => handleChange('diningOutCostLevel', level)}
@@ -506,9 +523,10 @@ function App() {
 
               <FontAwesomeIcon className="icon fade-in"  icon={faCar} />
 
-              <h2 className=" header fade-in" >Do you want to buy a New or Used Car?</h2>       </div>
+              <h2 className=" header fade-in" >Do you plan to purchase new or used vehicles?</h2>       </div>
               <div className='input-container'>
-                <button
+              <div className='button-container fade-in'>
+              <button
                   className={`button ${lifestyle.vehicleCondition === 'new' ? 'selected' : 'unselected'}`}
                   onClick={() => handleChange('vehicleCondition', 'new')}
                 >
@@ -520,6 +538,8 @@ function App() {
                 >
                   Used
                 </button>
+                </div>
+
               </div>
             </div>
             <div className='continueDiv'>
@@ -609,13 +629,13 @@ function App() {
               <ScrollIndicator /><ContinueButton onContinue={moveNext} /></div>
           </div>
           <div className="section">
-            <div className="container" style={{height: '70vh', width: '100vw', marginTop: '20vh'}}>
+            <div className="container" style={{height: '70vh', width: '90vw', marginTop: '20vh'}}>
               <div className="breakdown-container" style={{ display: 'flex',overflowY:'visible',  flexDirection: 'column', justifyContent: 'center', flex: '1'}}>
                 {/* Left Column for Salary Calculation */}
                 <div className='breakdownTitleOuter'>
                 <div className='breakdownTitle'>
 
-                  <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff', filter: 'drop-shadow(0px 0px 10px #000000)' }}>Required Salary: </p>
+                  <p className="paragraph fade-in" style={{ textAlign: 'center', color: '#ffffff' }}>Required Salary: </p>
                   <h2 className="breakdownHeader fade-in" style={{ textAlign: 'center' }}>
                     <CountUp
                       key={`${prevSalary}-${currentSalary}`} // Corrected the use of template string

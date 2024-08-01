@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './GameDialog.css';  // Ensure the CSS file contains the required styles
 
 const dialogs = [
+  {
+    text: "Hello, adventurer!",
+    svgPath: "character1.svg"
+  },
     {
-      text: "Welcome to the Dreamcatcher, adventurer!",
+      text: "Welcome to the Dreamcatcher.",
       svgPath: "character1.svg"
     },
     {
@@ -13,6 +17,10 @@ const dialogs = [
     },
     {
       text: "Remember, every decision affects your future.",
+      svgPath: "character2.svg"
+    },
+    {
+      text: "A comfortable adulthood requires you to plan your education and career very carefully.",
       svgPath: "character2.svg"
     },
     {
@@ -72,7 +80,7 @@ const GameDialog = ({ onComplete }) => {
           setTimeout(() => {
             setText((prev) => prev + char);
             resolve();
-          }, 30);  // Typing speed in ms
+          }, 25);  // Typing speed in ms
         });
       }, Promise.resolve());
     }, Promise.resolve());
@@ -123,6 +131,8 @@ const GameDialog = ({ onComplete }) => {
 
   return (
     <div className='dialog-overlay' onClick={handleNext} onMouseMove={handleMouseMove}>
+          <div class="gradient-bg"></div>
+
       <div className='svgDiv'> <div className='character-svg'>
           <img src={dialogs[currentDialog].svgPath} alt='Character' />
         </div></div>

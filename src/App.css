@@ -26,10 +26,10 @@ td {
   /* Animation Styles */
   .fade-in {
     opacity: 0;
-    transform: translateX(50px);
-    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    transform: translateY(20px);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
     filter: drop-shadow(5px 5px 0px 30px #000000);
-    animation: fadeInAnimation 1s forwards;
+    animation: fadeInAnimation .2s forwards;
 
 
 }
@@ -43,7 +43,7 @@ td {
 
 .fade-in.active {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
 }
 
 
@@ -59,11 +59,7 @@ td {
   text-align: center; /* centers text horizontally */
 }
 
-/* Ensures that the container within the section is also styled appropriately */
-#fullpage > .section:first-of-type .container {
-  width: 80%; /* or any width according to your design */
-  max-width: 600px; /* maximum width can be set to maintain readability */
-}
+
 
 
 
@@ -112,7 +108,7 @@ button:active {
 }
 
 #fp-nav {
-  top: 0% !important;
+  top: -2% !important;
   -webkit-transform: rotate(270deg)!important;
   -moz-transform: rotate(270deg)!important;
   -o-transform: rotate(270deg)!important;
@@ -135,7 +131,6 @@ button:active {
     margin-left: 6px !important;
     border-radius: 4px 0px 0px 4px !important;
     border: 0px solid #ffc400 !important; /* Ensuring the border takes the gradient */
-box-shadow: 0px 0px 5px 0px #55555533;
     top: 0px !important;
 
 }
@@ -155,6 +150,8 @@ box-shadow: 0px 0px 5px 0px #55555533;
     height: 21px !important;
     margin-left: 0px !important;
     top: 0% !important;
+    box-shadow: 0px 0px 5px 0px #55555533;
+
 
     margin: 0px 0 0 0px;
 }
@@ -164,6 +161,7 @@ box-shadow: 0px 0px 5px 0px #55555533;
 
 
 @media (min-width: 1025px) {
+
 
   .header {
 font-size: 2rem;
@@ -377,7 +375,7 @@ h1 {
   z-index: 100;
  
 
-    background-image: linear-gradient(45deg, #dadada65, #9494949a, #6161614d, #979797c4);
+    background-image: linear-gradient(45deg,#979797c4, #979797c4);
   border: 3px solid #ffffff54;
 backdrop-filter: blur(20px);
 -webkit-backdrop-filter: blur(20px); /* For Safari */
@@ -386,6 +384,10 @@ backdrop-filter: blur(20px);
 }
 
 @media (max-width: 1024px) {
+    
+button {
+  font-size: 1rem !important;
+}
 
   .breakdownHeader {
     font-size: 2rem;
@@ -408,11 +410,12 @@ backdrop-filter: blur(20px);
      flex-direction: row;
       justify-content: center;
       align-items: center;
-      justify-content: space-around;
+      justify-content: space-between;
        flex: 1;
 margin-top: 2vh;
-padding: 0;  
-width: 100vw;  
+padding: 2vw;  
+width: 80%;
+border-bottom: 1px solid #ffffff33;  
   }
 
 .breakdownTitleOuter {
@@ -660,7 +663,7 @@ h1 {
     height: 4vh;
     margin: 1vh;
     padding: 3vh;
-    font-size: 2rem;
+    font-size: 1rem !important;
     line-height: 0;
     font-weight: bold;
     cursor: none;
@@ -670,6 +673,8 @@ h1 {
     border-radius: 12px;
     transition: background-image 0.3s, box-shadow 0.1s, transform 0.3s, border 0.3s; /* Smooth transitions for multiple properties */
   }
+  
+
 
   .button-container{
     display: flex;
@@ -678,6 +683,7 @@ h1 {
     margin-top: 0vh;
   }
 
+ 
   .input-container{
     display: flex;
     flex-direction: row-reverse;
@@ -685,10 +691,20 @@ h1 {
     padding: 1vh;
   }
 
+  .button-container button {
+    width: 50vw;
+
+  }
+
+  .container-dining button {
+    width: 30vw !important;
+
+  }
+
   .container {
     display: flex;
     position: relative;
-    width: 90vw !important;
+    width: 90vw;
     height: auto !important;
     margin: 2vh ; 
     flex-direction: column !important;      
@@ -705,8 +721,8 @@ h1 {
      z-index: 100;
    
   
-      background-image: linear-gradient(45deg, #dadada65, #9494949a, #6161614d, #979797c4);
-    border: 3px solid #ffffff54;
+     background-image: linear-gradient(45deg,#97979755, #97979755);
+     border: 2px solid #ffffff54;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px); /* For Safari */
   
@@ -716,7 +732,21 @@ h1 {
   .container-dining {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
   }
+  
+  .container-dining .button-container {
+    width: 40%
+  }
+
+
+
+  .container-dining input {
+    padding: 1.5vh;
+    margin: 0vh !important;
+    width: 50%;
+  }
+
 }
 
 /* This targets all sections inside the fullpageRef container */
@@ -770,7 +800,7 @@ h1 {
     #ffffff,  /* Transition starts at 25% and remains solid white up to this point */
     #ffffff00, /* Begins transparent transition from this point */
     #ffffff00, /* Ends transparent transition at this point */
-    #ffffff,  /* From 75% to 100%, it is solid white again */
+    #E7866F,  /* From 75% to 100%, it is solid white again */
     #ffffff
   ); 
     z-index: 0; /* Set to 0 to be the base layer */
@@ -787,11 +817,14 @@ h1 {
     180deg, 
     #ffffff,  /* Transition starts at 25% and remains solid white up to this point */
     #ffffff,  /* Transition starts at 25% and remains solid white up to this point */
-    #ffffff55, /* Begins transparent transition from this point */
     #ffffff33, /* Ends transparent transition at this point */
-    #ffffff55,  /* From 75% to 100%, it is solid white again */
-    #ffffffab,  /* Transition starts at 25% and remains solid white up to this point */
-    #ffffffab,  /* Transition starts at 25% and remains solid white up to this point */
+    #ffffff33, /* Ends transparent transition at this point */
+
+    #ffffff33, /* Ends transparent transition at this point */
+
+    #E7866F33,  /* From 75% to 100%, it is solid white again */
+    #ffffff,  /* Transition starts at 25% and remains solid white up to this point */
+    #ffffff,  /* Transition starts at 25% and remains solid white up to this point */
     #ffffff
   );   background-size: 100% 100%; /* Start larger to mimic smaller inner radius */
   background-position: center; /* Ensures the gradient stays centered */

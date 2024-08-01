@@ -27,36 +27,42 @@ const VehicleSelection = ({ selectedMake, onSelect }) => {
 
   return (
     <div className="vehicle-selection">
-      <input
-        type="text"
-        placeholder="Search for a vehicle make..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="search-bar"
-      />
       <div className="carousel-container">
-        <button onClick={handlePrev} className="carousel-button">{"<"}</button>
+      <button onClick={handlePrev} className="carousel-button">{"<"}</button>
+
         <div className="carousel-item">
           {filteredCars.length > 0 ? (
             <>
               <button
                 className={`vehicle-button ${selectedMake === filteredCars[currentIndex]?.make ? 'selected' : ''}`}
                 onClick={() => onSelect(filteredCars[currentIndex]?.make)}
-              style={{backgroundImage: 'linear-gradient(to bottom, #ffffff00, #ffffff00)', height: '10vh', backgroundColor:'transparent'}}>
-                <img
-                  src={`cars/${filteredCars[currentIndex].make}.png`}
+              style={{backgroundImage: 'linear-gradient(to bottom, #ffffff00, #ffffff00)', height: '20vh', backgroundColor:'transparent'}}>
+                <h3 style={{lineHeight:'1rem'}}>{filteredCars[currentIndex].make}</h3><img
+                  src={`cars/carmodels/${filteredCars[currentIndex].make}.png`}
                   alt={`${filteredCars[currentIndex].make} logo`}
-                  style={{ width: '80px', height: 'auto', marginTop:'3vh', backgroundSize: 'contain', }} // Adjust size as necessary
+                  style={{ width: 'auto', height: '100px', marginTop:'0vh', backgroundSize: 'contain', }} // Adjust size as necessary
                 />
               </button>
             </>
           ) : (
             <p>No results found</p>
           )}
-          <h3 style={{color: '#ffffff77', fontWeight: 'normal', fontStyle: 'italic'}}>Tap to select</h3>
         </div>
         <button onClick={handleNext} className="carousel-button">{">"}</button>
+
+
       </div>
+      <div style={{height: '10vh'}}>
+      <h3 style={{color: '#ffffff77', paddingBottom: '2vh', fontWeight: 'normal', fontStyle: 'italic'}}>Tap to select</h3>
+</div>
+<input
+        type="text"
+        placeholder="Search for a vehicle make..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="search-bar"
+        style={{padding:'1vw 5vw', margin: '2vh', color: '#fff'}}
+      />
     </div>
   );
 };

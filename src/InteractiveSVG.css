@@ -25,7 +25,7 @@
 .interactive-svg, .background-svg {
   position: fixed;
   top: -2vh;
-  left: 20vw;
+  left: 50vw;
   transform: translateX(-50%);
   width: 10vh;   /* Sets the width as 10% of the viewport height */
   height: 10vh;  /* Sets the height as 10% of the viewport height */
